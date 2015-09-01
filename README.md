@@ -1,2 +1,3 @@
 # pycltorch
-Python wrappers for cltorch/clnn
+POC for Python wrappers for cltorch/clnn
+
