@@ -20,7 +20,10 @@ pip install cython
 pip install numpy
 ```
 * *You need to have pytorch repo next to pycltorch repository*, ie the parent folder of pycltorch should contain [pytorch](https://github.com/hughperkins/pytorch)
-  * *Important*: pytorch repo clone should be on branch `monkey-patchable`, ie do `(cd ../pytorch; git checkout monkey-patchable)`
+  * *Important*: pytorch repo clone should be on branch `monkey-patchable`, ie do
+```
+(cd ../pytorch; git checkout monkey-patchable)
+```
 
 To run:
 ```
