@@ -24,4 +24,8 @@ linear = linear.cl()
 print('linearCl.output', linear.output)
 
 output = linear.forward(a)
+print('output', output)
+
+outputFloat = output.float()
+print('outputFloat', outputFloat)
 

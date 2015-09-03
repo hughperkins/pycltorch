@@ -21,13 +21,17 @@ cdef extern from "THTensor.h":
 
 cdef extern from "THClTensor.h":
     cdef struct THClTensor
-    void THClTensor_retain(THClState *state, THClTensor*self)
+    THClTensor *THClTensor_newv2(THClState *state, int device)
     THClTensor *THClTensor_newWithSize1d(THClState *state, int device, long size0)
     THClTensor *THClTensor_newWithSize2d(THClState *state, int device, long size0, long size1)
+    void THClTensor_retain(THClState *state, THClTensor*self)
     void THClTensor_free(THClState *state, THClTensor *tensor)
+    int THClTensor_nDimension(THClState *state, THClTensor *tensor)
+    long THClTensor_size(THClState *state, const THClTensor *self, int dim)
 
 cdef extern from "THClTensorCopy.h":
     void THClTensor_copyFloat(THClState *state, THClTensor *self, THFloatTensor *src)
+    void THFloatTensor_copyCl(THClState *state, THFloatTensor *self, THClTensor *src)
 
 cdef extern from "THClTensorMath.h":
     float THClTensor_sumall(THClState *state, THClTensor *self)
@@ -67,9 +71,38 @@ cdef class ClTensor(object):
 #        print('ClTensor.__dealloc__')
         THClTensor_free(clGlobalState.state, self.native)
 
+    @staticmethod
+    def new():
+        cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
+        return ClTensor_fromNative(newTensorC, False)
+
+#    def __repr__(ClTensor self):
+#        cdef _FloatTensor = _FloatTensor.copy
+
+    def float(ClTensor self):
+        cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
+        cdef PyTorch._FloatTensor size = self.size()
+        floatTensor.resize(size)
+        THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
+        return floatTensor
+
     def copy(ClTensor self, PyTorch._FloatTensor src):
         THClTensor_copyFloat(clGlobalState.state, self.native, src.thFloatTensor)
         return self
+
+    cpdef int dims(ClTensor self):
+        return THClTensor_nDimension(clGlobalState.state, self.native)
+
+    def size(ClTensor self):
+        cdef int dims = self.dims()
+        cdef PyTorch._FloatTensor size
+        if dims > 0:
+            size = PyTorch._FloatTensor(dims)
+            for d in range(dims):
+                size.set1d(d, THClTensor_size(clGlobalState.state, self.native, d))
+            return size
+        else:
+            return None  # not sure how to handle this yet
 
     def sum(ClTensor self):
         return THClTensor_sumall(clGlobalState.state, self.native)
