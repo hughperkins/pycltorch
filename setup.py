@@ -41,9 +41,11 @@ else:
 runtime_library_dirs = []
 libraries = []
 #libraries.append('mylib')
-libraries.append('clnnWrapper')
+#libraries.append('clnnWrapper')
 libraries.append('TH')
 libraries.append('THCl')
+libraries.append('TorchLanguageIndependence')
+#libraries.append('PyTorch')
 library_dirs = []
 library_dirs.append('cbuild')
 library_dirs.append(home_dir + '/torch/install/lib')
@@ -54,30 +56,46 @@ if osfamily == 'Linux':
 if osfamily == 'Windows':
     libraries.append('winmm')
 
-sources = ["PyClTorch.cxx"]
+sources = ["PyClTorch.cxx", "clnnWrapper.cpp"]
 if cython_present:
-    sources = ["PyClTorch.pyx"]
+    sources = ["PyClTorch.pyx", "clnnWrapper.cpp"]
 ext_modules = [
     Extension("PyClTorch",
               sources=sources,
-              include_dirs=[home_dir + '/torch/install/include/TH'],
+              include_dirs=[
+                  home_dir + '/torch/install/include/TH',
+                  home_dir + '/torch/install/include/THCl',
+                  '/usr/include/lua5.1',
+                  '../pytorch'],
               library_dirs=library_dirs,
               libraries=libraries,
               extra_compile_args=compile_options,
               runtime_library_dirs=runtime_library_dirs,
-              language="c++")]
+              language="c++"),
+#    Extension("GlobalState",
+#              sources=['GlobalState.pyx'],
+#              include_dirs=[
+#                  home_dir + '/torch/install/include/TH',
+#                  home_dir + '/torch/install/include/THCl',
+#                  '../pytorch'],
+#              library_dirs=library_dirs,
+#              libraries=libraries,
+#              extra_compile_args=compile_options,
+#              runtime_library_dirs=runtime_library_dirs,
+#              language="c++"),
+]
 
 ext_modules = cythonize(ext_modules)
 
 setup(
-    name='',
+    name='PyClTorch',
     version='',
-    author="",
-    author_email="",
+    author="Hugh Perkins",
+    author_email="hughperkins@gmail.com",
     description=(
-        ''),
-    license='',
-    url='',
+        'Python wrappers for cltorch'),
+    license='BSD2',
+    url='https://github.com/hughperkins/pycltorch',
     long_description='',
     classifiers=[
     ],
@@ -85,3 +103,4 @@ setup(
     scripts=[],
     ext_modules=ext_modules,
 )
+

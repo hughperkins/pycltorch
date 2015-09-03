@@ -9,7 +9,11 @@ import PyTorch
 #print('a', a)
 #print(PyTorch.FloatTensor(3,2))
 
-a = PyTorch.FloatTensor(3, 2)
+a = PyTorch.FloatTensor(3, 2).uniform()
 print('a', a)
-a.cl()
+acl = a.cl()
+print(type(a))
+print(type(acl))
+
+print('sum:', acl.sum())
 

@@ -1,5 +1,8 @@
 cbuild/
 env/
+share
+dist/
+*.egg-info/
 *.pyc
 
 # Compiled Object files
