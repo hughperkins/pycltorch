@@ -1,10 +1,6 @@
 # pycltorch
 POC for Python wrappers for cltorch/clnn
 
-# Latest news
-
-* can instantiate a ClTensor now :-)  And run `sumall()` :-)
-
 # Example usage
 
 ## Pre-requisites
