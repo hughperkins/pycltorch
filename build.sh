@@ -7,10 +7,16 @@
 # - must have prerequisites for pytorch installed, ie Cython, numpy, etc
 # - pytorch must be cloned to a sibling folder of this folder, ie the parent of pycltorch should also contain pytorch
 
+# Availalbe env vars:
+# NOPYTORCHBUILD=1  => doesnt rebuild pytorch
+# NOGIT=1  => doesnt pull from git into pytorch
+
 if [[ x${NOPYTORCHBUILD} == x ]]; then {
     cd ../pytorch
-    git checkout master
-    git pull
+    if [[ x${NOGIT}} == x ]]; then {
+        git checkout master
+        git pull
+    } fi
     pip uninstall -y PyTorch
     ./build.sh || exit 1
     python setup.py install || exit 1

@@ -923,6 +923,7 @@ int __pyx_module_is_main_PyClTorch = 0;
 static PyObject *__pyx_builtin_Exception;
 static PyObject *__pyx_builtin_print;
 static PyObject *__pyx_builtin_MemoryError;
+static char __pyx_k_clnn[] = "clnn";
 static char __pyx_k_copy[] = "copy";
 static char __pyx_k_init[] = "init";
 static char __pyx_k_main[] = "__main__";
@@ -1846,7 +1847,7 @@ static PyObject *__pyx_pf_9PyClTorch_2init(CYTHON_UNUSED PyObject *__pyx_self) {
  *     cdef THClState *state2
  *     print('initializing PyClTorch...')             # <<<<<<<<<<<<<<
  *     require(globalState.L, 'cltorch')
- *     clGlobalState = ClGlobalState()
+ *     require(globalState.L, 'clnn')
  */
   __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
@@ -1856,27 +1857,36 @@ static PyObject *__pyx_pf_9PyClTorch_2init(CYTHON_UNUSED PyObject *__pyx_self) {
  *     cdef THClState *state2
  *     print('initializing PyClTorch...')
  *     require(globalState.L, 'cltorch')             # <<<<<<<<<<<<<<
+ *     require(globalState.L, 'clnn')
  *     clGlobalState = ClGlobalState()
- *     clGlobalState.state = getState(globalState.L)
  */
   require(__pyx_v_9PyClTorch_globalState->L, __pyx_k_cltorch);
 
   /* "PyClTorch.pyx":102
  *     print('initializing PyClTorch...')
  *     require(globalState.L, 'cltorch')
+ *     require(globalState.L, 'clnn')             # <<<<<<<<<<<<<<
+ *     clGlobalState = ClGlobalState()
+ *     clGlobalState.state = getState(globalState.L)
+ */
+  require(__pyx_v_9PyClTorch_globalState->L, __pyx_k_clnn);
+
+  /* "PyClTorch.pyx":103
+ *     require(globalState.L, 'cltorch')
+ *     require(globalState.L, 'clnn')
  *     clGlobalState = ClGlobalState()             # <<<<<<<<<<<<<<
  *     clGlobalState.state = getState(globalState.L)
  *     print(' ... PyClTorch initialized')
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClGlobalState), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClGlobalState), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_9PyClTorch_clGlobalState));
   __Pyx_DECREF_SET(__pyx_v_9PyClTorch_clGlobalState, ((struct __pyx_obj_9PyClTorch_ClGlobalState *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":103
- *     require(globalState.L, 'cltorch')
+  /* "PyClTorch.pyx":104
+ *     require(globalState.L, 'clnn')
  *     clGlobalState = ClGlobalState()
  *     clGlobalState.state = getState(globalState.L)             # <<<<<<<<<<<<<<
  *     print(' ... PyClTorch initialized')
@@ -1884,14 +1894,14 @@ static PyObject *__pyx_pf_9PyClTorch_2init(CYTHON_UNUSED PyObject *__pyx_self) {
  */
   __pyx_v_9PyClTorch_clGlobalState->state = getState(__pyx_v_9PyClTorch_globalState->L);
 
-  /* "PyClTorch.pyx":104
+  /* "PyClTorch.pyx":105
  *     clGlobalState = ClGlobalState()
  *     clGlobalState.state = getState(globalState.L)
  *     print(' ... PyClTorch initialized')             # <<<<<<<<<<<<<<
  * 
  * init()
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -2828,20 +2838,20 @@ static int __Pyx_InitCachedConstants(void) {
  *     cdef THClState *state2
  *     print('initializing PyClTorch...')             # <<<<<<<<<<<<<<
  *     require(globalState.L, 'cltorch')
- *     clGlobalState = ClGlobalState()
+ *     require(globalState.L, 'clnn')
  */
   __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_initializing_PyClTorch); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "PyClTorch.pyx":104
+  /* "PyClTorch.pyx":105
  *     clGlobalState = ClGlobalState()
  *     clGlobalState.state = getState(globalState.L)
  *     print(' ... PyClTorch initialized')             # <<<<<<<<<<<<<<
  * 
  * init()
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_PyClTorch_initialized); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_PyClTorch_initialized); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
@@ -3095,13 +3105,13 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_init, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":106
+  /* "PyClTorch.pyx":107
  *     print(' ... PyClTorch initialized')
  * 
  * init()             # <<<<<<<<<<<<<<
  * 
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_init); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_init); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -3114,10 +3124,10 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
     }
   }
   if (__pyx_t_2) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;

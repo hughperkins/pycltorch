@@ -20,3 +20,7 @@ print('sum:', acl.sum())
 linear = PyTorch.Linear(3,5)
 print('linear:', linear)
 
+linearCl = linear.cl()
+print('linearCl', linearCl)
+print('linearCl.output', linearCl.output)
+

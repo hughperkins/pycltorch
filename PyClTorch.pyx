@@ -99,6 +99,7 @@ def init():
     cdef THClState *state2
     print('initializing PyClTorch...')
     require(globalState.L, 'cltorch')
+    require(globalState.L, 'clnn')
     clGlobalState = ClGlobalState()
     clGlobalState.state = getState(globalState.L)
     print(' ... PyClTorch initialized')

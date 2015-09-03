@@ -1,4 +1,4 @@
-from floattensor import FloatTensor
+from floattensor import FloatTensor, Linear
 
 import PyClTorch
 
@@ -9,4 +9,12 @@ def cl(self):
     return res
 
 FloatTensor.cl = cl
+
+def Linear_cl(self):
+    print('Linear_cl')
+    print('self', self)
+    return self
+
+# import PyTorch
+Linear.cl = Linear_cl
 
