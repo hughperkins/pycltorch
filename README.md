@@ -1,8 +1,6 @@
 # pycltorch
 POC for Python wrappers for cltorch/clnn
 
-THIS IS TEMPORARILY BROKEN BY THE RECENT RADICAL CHANGES TO PYTORCH. But those same changes will make writing the cltorch wrappers significnatly easier, becaue they make the lua wrappers dynamic.
-
 # Example usage
 
 ## Pre-requisites

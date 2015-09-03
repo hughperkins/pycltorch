@@ -4,6 +4,7 @@ import PyClTorch
 #PyClTorch.newfunction(123)
 
 import PyTorch
+from PyTorchAug import *
 
 #a = PyTorch.foo(3,2)
 #print('a', a)
@@ -17,7 +18,7 @@ print(type(acl))
 
 print('sum:', acl.sum())
 
-linear = PyTorch.Linear(3,5)
+linear = Linear(3,5)
 print('linear:', linear)
 
 linearCl = linear.cl()

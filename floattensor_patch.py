@@ -1,6 +1,10 @@
-from floattensor import FloatTensor, Linear
+from __future__ import print_function
+
+from floattensor import FloatTensor
 
 import PyClTorch
+import PyTorchAug
+#from PyTorchAug import *
 
 def cl(self):
     print('cl')
@@ -10,11 +14,18 @@ def cl(self):
 
 FloatTensor.cl = cl
 
-def Linear_cl(self):
-    print('Linear_cl')
-    print('self', self)
-    return self
+#PyTorchAug.
 
-# import PyTorch
-Linear.cl = Linear_cl
+#def Linear_cl(self):
+#    print('Linear_cl')
+#    print('self', self)
+#    self.cl()
+#    return self
+
+## import PyTorch
+#Linear.cl = Linear_cl
+
+print('dir(PyTorchAug)', dir(PyTorchAug))
+print('dir(PyClTorch)', dir(PyClTorch))
+PyTorchAug.cythonClasses['torch.ClTensor'] = {'popFunction': PyClTorch.cyPopClTensor}
 

@@ -28,4 +28,10 @@ THClState *getState(lua_State *L) {
     lua_remove(L, -1);
     return (THClState *)state;
 }
+THClTensor *popClTensor(lua_State *L) {
+    void **pTensor = (void **)lua_touserdata(L, -1);
+    THClTensor *tensor = (THClTensor *)(*pTensor);
+    lua_remove(L, -1);
+    return tensor;
+}
 

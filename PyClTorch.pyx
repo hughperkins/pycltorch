@@ -21,6 +21,7 @@ cdef extern from "THTensor.h":
 
 cdef extern from "THClTensor.h":
     cdef struct THClTensor
+    void THClTensor_retain(THClState *state, THClTensor*self)
     THClTensor *THClTensor_newWithSize1d(THClState *state, int device, long size0)
     THClTensor *THClTensor_newWithSize2d(THClState *state, int device, long size0, long size1)
     void THClTensor_free(THClState *state, THClTensor *tensor)
@@ -33,6 +34,12 @@ cdef extern from "THClTensorMath.h":
 
 cdef extern from "clnnWrapper.h":
     THClState *getState(lua_State *L)
+    THClTensor *popClTensor(lua_State *L)
+
+def cyPopClTensor():
+    cdef THClTensor *tensorC = popClTensor(globalState.L)
+    cdef ClTensor tensor = ClTensor_fromNative(tensorC)
+    return tensor
 
 cimport PyTorch
 
@@ -62,6 +69,13 @@ cdef class ClTensor(object):
 
     def sum(ClTensor self):
         return THClTensor_sumall(clGlobalState.state, self.native)
+
+cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
+    cdef ClTensor tensor = ClTensor()
+    tensor.native = tensorC
+    if retain:
+        THClTensor_retain(clGlobalState.state, tensorC)
+    return tensor
 
 def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
     cdef PyTorch._FloatTensor size = floatTensor.size()
