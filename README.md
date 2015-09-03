@@ -50,31 +50,18 @@ loaded lua library
 generator null: False
  ... PyTorch initialized
 initializing PyClTorch...
-cltorch init.lua
-cltorch._state	userdata: 0x2c59440
-ClGlobalState.__cinit__
-state: 46502976
-state null: False
-state:  0x2c59440
  ... PyClTorch initialized
-a 0.0242427 0.866875
-0.122811 0.855529
-0.380983 0.891376
+a 0.785071 0.192063
+0.335184 0.825957
+0.26625 0.501567
 [torch.FloatTensor of size 3x2]
 
 cl
-('self', 0.0242427 0.866875
-0.122811 0.855529
-0.380983 0.891376
-[torch.FloatTensor of size 3x2]
-)
-ClTensor.__cinit__
 Using NVIDIA Corporation , OpenCL platform: NVIDIA CUDA
 Using OpenCL device: GeForce 940M
-('res', <PyClTorch.ClTensor object at 0x7ff37405b150>)
+('res', <PyClTorch.ClTensor object at 0x7f064f64e150>)
 <class 'floattensor.FloatTensor'>
 <type 'PyClTorch.ClTensor'>
-sum: 3.14181804657
-ClTensor.__dealloc__
+sum: 2.90609288216
 ```
 
