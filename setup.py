@@ -63,6 +63,7 @@ ext_modules = [
     Extension("PyClTorch",
               sources=sources,
               include_dirs=[
+                  home_dir + '/torch/install/include',
                   home_dir + '/torch/install/include/TH',
                   home_dir + '/torch/install/include/THCl',
                   '/usr/include/lua5.1',

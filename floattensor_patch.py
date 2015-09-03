@@ -28,4 +28,7 @@ FloatTensor.cl = cl
 print('dir(PyTorchAug)', dir(PyTorchAug))
 print('dir(PyClTorch)', dir(PyClTorch))
 PyTorchAug.cythonClasses['torch.ClTensor'] = {'popFunction': PyClTorch.cyPopClTensor}
+PyTorchAug.populateLuaClassesReverse()
+
+PyTorchAug.pushFunctionByPythonClass[PyClTorch.ClTensor] = PyClTorch.cyPushClTensor
 

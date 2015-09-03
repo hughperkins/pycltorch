@@ -11,12 +11,13 @@ extern "C" {
 #include <iostream>
 #include <stdexcept>
 
-//#include "luaT.h"
+#include "luaT.h"
 #include "THTensor.h"
 #include "THStorage.h"
 //#include "clLuaHelper.h"
 #include "LuaHelper.h"
 #include "clnnWrapper.h"
+#include "THClTensor.h"
 
 using namespace std;
 
@@ -33,5 +34,9 @@ THClTensor *popClTensor(lua_State *L) {
     THClTensor *tensor = (THClTensor *)(*pTensor);
     lua_remove(L, -1);
     return tensor;
+}
+void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor) {
+    THClTensor_retain(state, tensor);
+    luaT_pushudata(L, tensor, "torch.ClTensor");    
 }
 

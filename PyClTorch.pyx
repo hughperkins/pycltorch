@@ -35,11 +35,15 @@ cdef extern from "THClTensorMath.h":
 cdef extern from "clnnWrapper.h":
     THClState *getState(lua_State *L)
     THClTensor *popClTensor(lua_State *L)
+    void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor)
 
 def cyPopClTensor():
     cdef THClTensor *tensorC = popClTensor(globalState.L)
     cdef ClTensor tensor = ClTensor_fromNative(tensorC)
     return tensor
+
+def cyPushClTensor(ClTensor tensor):
+    pushClTensor(clGlobalState.state, globalState.L, tensor.native)
 
 cimport PyTorch
 

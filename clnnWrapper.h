@@ -11,4 +11,5 @@ class THClTensor;
 
 THClState *getState(lua_State *L);
 THClTensor *popClTensor(lua_State *L);
+void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor);
 

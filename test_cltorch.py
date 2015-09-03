@@ -10,18 +10,18 @@ from PyTorchAug import *
 #print('a', a)
 #print(PyTorch.FloatTensor(3,2))
 
-a = PyTorch.FloatTensor(3, 2).uniform()
+a = PyTorch.FloatTensor(4, 3).uniform()
 print('a', a)
-acl = a.cl()
+a = a.cl()
 print(type(a))
-print(type(acl))
 
-print('sum:', acl.sum())
+print('sum:', a.sum())
 
 linear = Linear(3,5)
 print('linear:', linear)
 
-linearCl = linear.cl()
-print('linearCl', linearCl)
-print('linearCl.output', linearCl.output)
+linear = linear.cl()
+print('linearCl.output', linear.output)
+
+output = linear.forward(a)
 
