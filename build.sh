@@ -9,7 +9,7 @@
 
 if [[ x${NOPYTORCHBUILD} == x ]]; then {
     cd ../pytorch
-    git checkout monkey-patchable
+    git checkout master
     git pull
     pip uninstall -y PyTorch
     ./build.sh || exit 1
