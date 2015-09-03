@@ -20,11 +20,11 @@ extern "C" {
 
 using namespace std;
 
-#pragma message("compiling clnnWrapper")
+//#pragma message("compiling clnnWrapper")
 THClState *getState(lua_State *L) {
     pushGlobal(L, "cltorch", "_state");
     void *state = lua_touserdata(L, -1);
-    cout << "state: " << (long)state << endl;
+//    cout << "state: " << (long)state << endl;
     lua_remove(L, -1);
     return (THClState *)state;
 }

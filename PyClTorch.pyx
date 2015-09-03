@@ -7,17 +7,6 @@ cimport cpython.array
 import array
 
 import PyTorch
-#cimport PyTorch
-
-#PyTorch.foo = PyTorch.FloatTensor
-#PyTorch.FloatTensor = None
-
-#def class FloatTensor(PyTorch.FloatTensor):
-#    def __cinit__(self):
-#        print('__cinit__')
-
-#    def __dealloc__(self):
-#        print('__dealloc__')
 
 cdef extern from "LuaHelper.h":
     cdef struct lua_State
@@ -51,7 +40,7 @@ cdef class ClTensor(object):
     cdef THClTensor *native
 
     def __cinit__(ClTensor self, *args):
-        print('ClTensor.__cinit__')
+#        print('ClTensor.__cinit__')
         if len(args) > 0:
             for arg in args:
                 if not isinstance(arg, int):
@@ -64,7 +53,7 @@ cdef class ClTensor(object):
                 raise Exception('Not implemented, len(args)=' + str(len(args)))
 
     def __dealloc__(ClTensor self):
-        print('ClTensor.__dealloc__')
+#        print('ClTensor.__dealloc__')
         THClTensor_free(clGlobalState.state, self.native)
 
     def copy(ClTensor self, PyTorch._FloatTensor src):
@@ -92,57 +81,16 @@ def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
 
 import floattensor_patch
 
-#cdef extern from "THRandom.h":
-#    cdef struct THGenerator
+cdef PyTorch.GlobalState globalState = PyTorch.getGlobalState()
 
-# This should go into a .pxd or similar probably:
-#cdef class GlobalState(object):
-###    cdef PyTorchState *state
-#    cdef lua_State *L
-#    cdef THGenerator *generator
-
-#    def __cinit__(GlobalState self):
-#        print('GlobalState.__cinit__')
-##        self.state = initPyTorchState();
-
-#    def __dealloc__(self):
-#        print('GlobalState.__dealloc__')
-
-#    cdef lua_State *getL(self):  # this is mostly a migration path, we will push this downwards, and out of htis layer
-#        return getL(self.state)
-
-#cdef class ClGlobalState(object):
-##    cdef PyTorchState *state
-##    cdef lua_State *L
-##    cdef THGenerator *generator
+cdef class ClGlobalState(object):
+    cdef THClState *state
 
 #    def __cinit__(ClGlobalState self):
 #        print('ClGlobalState.__cinit__')
-##        self.state = initPyTorchState();
 
 #    def __dealloc__(self):
 #        print('ClGlobalState.__dealloc__')
-
-#    cdef lua_State *getL(self):  # this is mostly a migration path, we will push this downwards, and out of htis layer
-#        return getL(self.state)
-
-#cimport GlobalState
-#import GlobalState
-
-cdef PyTorch.GlobalState globalState = PyTorch.getGlobalState()
-
-#require(PyTorch.globalState.L, 'cltorch')
-
-cdef class ClGlobalState(object):
-##    cdef lua_State *L
-##    cdef THGenerator *generator
-    cdef THClState *state
-
-    def __cinit__(ClGlobalState self):
-        print('ClGlobalState.__cinit__')
-
-    def __dealloc__(self):
-        print('ClGlobalState.__dealloc__')
 
 cdef ClGlobalState clGlobalState
 
@@ -153,11 +101,6 @@ def init():
     require(globalState.L, 'cltorch')
     clGlobalState = ClGlobalState()
     clGlobalState.state = getState(globalState.L)
-##    globalState.L = 
-##    globalState.generator = <THGenerator *>(getGlobal(globalState.L, 'torch', '_gen'))
-    print('state null:', clGlobalState.state == NULL)
-    print('state: ', hex(<long>(clGlobalState.state)))
-#    state2 = getState(globalState.L)
     print(' ... PyClTorch initialized')
 
 init()
