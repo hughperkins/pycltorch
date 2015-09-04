@@ -523,8 +523,8 @@ struct __pyx_obj_9PyClTorch_ClTensor;
 struct __pyx_obj_9PyClTorch_ClGlobalState;
 struct __pyx_opt_args_9PyClTorch_ClTensor_fromNative;
 
-/* "PyClTorch.pyx":130
- *         return res
+/* "PyClTorch.pyx":143
+ *         return self
  * 
  * cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):             # <<<<<<<<<<<<<<
  *     cdef ClTensor tensor = ClTensor(_allocate=False )
@@ -563,7 +563,7 @@ struct __pyx_obj_7PyTorch_GlobalState {
 };
 
 
-/* "PyClTorch.pyx":56
+/* "PyClTorch.pyx":57
  * cimport PyTorch
  * 
  * cdef class ClTensor(object):             # <<<<<<<<<<<<<<
@@ -577,7 +577,7 @@ struct __pyx_obj_9PyClTorch_ClTensor {
 };
 
 
-/* "PyClTorch.pyx":161
+/* "PyClTorch.pyx":174
  * cdef PyTorch.GlobalState globalState = PyTorch.getGlobalState()
  * 
  * cdef class ClGlobalState(object):             # <<<<<<<<<<<<<<
@@ -609,7 +609,7 @@ struct __pyx_vtabstruct_7PyTorch__FloatTensor {
 static struct __pyx_vtabstruct_7PyTorch__FloatTensor *__pyx_vtabptr_7PyTorch__FloatTensor;
 
 
-/* "PyClTorch.pyx":56
+/* "PyClTorch.pyx":57
  * cimport PyTorch
  * 
  * cdef class ClTensor(object):             # <<<<<<<<<<<<<<
@@ -975,6 +975,8 @@ static PyObject *__pyx_builtin_Exception;
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_print;
 static PyObject *__pyx_builtin_MemoryError;
+static char __pyx_k_a[] = "a";
+static char __pyx_k_b[] = "b";
 static char __pyx_k_new[] = "new";
 static char __pyx_k_clnn[] = "clnn";
 static char __pyx_k_copy[] = "copy";
@@ -996,6 +998,7 @@ static char __pyx_k_PyTorch[] = "PyTorch";
 static char __pyx_k_cltorch[] = "cltorch";
 static char __pyx_k_replace[] = "replace";
 static char __pyx_k_tensorC[] = "tensorC";
+static char __pyx_k_uniform[] = "uniform";
 static char __pyx_k_ClTensor[] = "ClTensor";
 static char __pyx_k_allocate[] = "_allocate";
 static char __pyx_k_clTensor[] = "clTensor";
@@ -1027,8 +1030,10 @@ static PyObject *__pyx_kp_s_Not_implemented_len_args;
 static PyObject *__pyx_n_s_PyClTorch;
 static PyObject *__pyx_kp_s_PyClTorch_initialized;
 static PyObject *__pyx_n_s_PyTorch;
+static PyObject *__pyx_n_s_a;
 static PyObject *__pyx_n_s_allocate;
 static PyObject *__pyx_n_s_array;
+static PyObject *__pyx_n_s_b;
 static PyObject *__pyx_kp_s_cannot_provide_arguments_to_init;
 static PyObject *__pyx_n_s_clTensor;
 static PyObject *__pyx_n_s_copy;
@@ -1059,6 +1064,7 @@ static PyObject *__pyx_n_s_staticmethod;
 static PyObject *__pyx_n_s_tensor;
 static PyObject *__pyx_n_s_tensorC;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_n_s_uniform;
 static PyObject *__pyx_pf_9PyClTorch_cyPopClTensor(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_9PyClTorch_2cyPushClTensor(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_tensor); /* proto */
 static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, PyObject *__pyx_v__allocate, PyObject *__pyx_v_args); /* proto */
@@ -1072,6 +1078,8 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
 static PyObject *__pyx_pf_9PyClTorch_8ClTensor_16nElement(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9PyClTorch_8ClTensor_18sum(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9PyClTorch_8ClTensor_20__add__(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, float __pyx_v_scalar); /* proto */
+static PyObject *__pyx_pf_9PyClTorch_8ClTensor_22resizeAs(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_model); /* proto */
+static PyObject *__pyx_pf_9PyClTorch_8ClTensor_24uniform(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, float __pyx_v_a, float __pyx_v_b); /* proto */
 static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_7PyTorch__FloatTensor *__pyx_v_floatTensor); /* proto */
 static PyObject *__pyx_pf_9PyClTorch_6init(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static int __pyx_pf_7cpython_5array_5array___getbuffer__(arrayobject *__pyx_v_self, Py_buffer *__pyx_v_info, CYTHON_UNUSED int __pyx_v_flags); /* proto */
@@ -1093,7 +1101,7 @@ static PyObject *__pyx_codeobj__10;
 static PyObject *__pyx_codeobj__12;
 static PyObject *__pyx_codeobj__14;
 
-/* "PyClTorch.pyx":46
+/* "PyClTorch.pyx":47
  *     void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor)
  * 
  * def cyPopClTensor():             # <<<<<<<<<<<<<<
@@ -1126,7 +1134,7 @@ static PyObject *__pyx_pf_9PyClTorch_cyPopClTensor(CYTHON_UNUSED PyObject *__pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("cyPopClTensor", 0);
 
-  /* "PyClTorch.pyx":47
+  /* "PyClTorch.pyx":48
  * 
  * def cyPopClTensor():
  *     cdef THClTensor *tensorC = popClTensor(globalState.L)             # <<<<<<<<<<<<<<
@@ -1135,20 +1143,20 @@ static PyObject *__pyx_pf_9PyClTorch_cyPopClTensor(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_tensorC = popClTensor(__pyx_v_9PyClTorch_globalState->L);
 
-  /* "PyClTorch.pyx":48
+  /* "PyClTorch.pyx":49
  * def cyPopClTensor():
  *     cdef THClTensor *tensorC = popClTensor(globalState.L)
  *     cdef ClTensor tensor = ClTensor_fromNative(tensorC)             # <<<<<<<<<<<<<<
  *     return tensor
  * 
  */
-  __pyx_t_1 = __pyx_f_9PyClTorch_ClTensor_fromNative(__pyx_v_tensorC, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9PyClTorch_ClTensor_fromNative(__pyx_v_tensorC, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 49; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_9PyClTorch_ClTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_9PyClTorch_ClTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 49; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_tensor = ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":49
+  /* "PyClTorch.pyx":50
  *     cdef THClTensor *tensorC = popClTensor(globalState.L)
  *     cdef ClTensor tensor = ClTensor_fromNative(tensorC)
  *     return tensor             # <<<<<<<<<<<<<<
@@ -1160,7 +1168,7 @@ static PyObject *__pyx_pf_9PyClTorch_cyPopClTensor(CYTHON_UNUSED PyObject *__pyx
   __pyx_r = ((PyObject *)__pyx_v_tensor);
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":46
+  /* "PyClTorch.pyx":47
  *     void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor)
  * 
  * def cyPopClTensor():             # <<<<<<<<<<<<<<
@@ -1180,7 +1188,7 @@ static PyObject *__pyx_pf_9PyClTorch_cyPopClTensor(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":51
+/* "PyClTorch.pyx":52
  *     return tensor
  * 
  * def cyPushClTensor(ClTensor tensor):             # <<<<<<<<<<<<<<
@@ -1198,7 +1206,7 @@ static PyObject *__pyx_pw_9PyClTorch_3cyPushClTensor(PyObject *__pyx_self, PyObj
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("cyPushClTensor (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_tensor), __pyx_ptype_9PyClTorch_ClTensor, 1, "tensor", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_tensor), __pyx_ptype_9PyClTorch_ClTensor, 1, "tensor", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_pf_9PyClTorch_2cyPushClTensor(__pyx_self, ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_v_tensor));
 
   /* function exit code */
@@ -1215,7 +1223,7 @@ static PyObject *__pyx_pf_9PyClTorch_2cyPushClTensor(CYTHON_UNUSED PyObject *__p
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("cyPushClTensor", 0);
 
-  /* "PyClTorch.pyx":52
+  /* "PyClTorch.pyx":53
  * 
  * def cyPushClTensor(ClTensor tensor):
  *     pushClTensor(clGlobalState.state, globalState.L, tensor.native)             # <<<<<<<<<<<<<<
@@ -1224,7 +1232,7 @@ static PyObject *__pyx_pf_9PyClTorch_2cyPushClTensor(CYTHON_UNUSED PyObject *__p
  */
   pushClTensor(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_9PyClTorch_globalState->L, __pyx_v_tensor->native);
 
-  /* "PyClTorch.pyx":51
+  /* "PyClTorch.pyx":52
  *     return tensor
  * 
  * def cyPushClTensor(ClTensor tensor):             # <<<<<<<<<<<<<<
@@ -1239,7 +1247,7 @@ static PyObject *__pyx_pf_9PyClTorch_2cyPushClTensor(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":59
+/* "PyClTorch.pyx":60
  *     cdef THClTensor *native
  * 
  *     def __cinit__(ClTensor self, *args, _allocate=True):             # <<<<<<<<<<<<<<
@@ -1286,7 +1294,7 @@ static int __pyx_pw_9PyClTorch_8ClTensor_1__cinit__(PyObject *__pyx_v_self, PyOb
         if (value) { values[index] = value; kw_args--; }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, 0, "__cinit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 59; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, 0, "__cinit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) < 0) {
       goto __pyx_L5_argtuple_error;
@@ -1296,7 +1304,7 @@ static int __pyx_pw_9PyClTorch_8ClTensor_1__cinit__(PyObject *__pyx_v_self, PyOb
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 0, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 59; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 0, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_args); __pyx_v_args = 0;
   __Pyx_AddTraceback("PyClTorch.ClTensor.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -1327,17 +1335,17 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "PyClTorch.pyx":61
+  /* "PyClTorch.pyx":62
  *     def __cinit__(ClTensor self, *args, _allocate=True):
  * #        print('ClTensor.__cinit__')
  *         if _allocate:             # <<<<<<<<<<<<<<
  *             for arg in args:
  *                 if not isinstance(arg, int):
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v__allocate); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v__allocate); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 62; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "PyClTorch.pyx":62
+    /* "PyClTorch.pyx":63
  * #        print('ClTensor.__cinit__')
  *         if _allocate:
  *             for arg in args:             # <<<<<<<<<<<<<<
@@ -1348,15 +1356,15 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
     for (;;) {
       if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
       #if CYTHON_COMPILING_IN_CPYTHON
-      __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 62; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       #else
-      __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 62; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       #endif
       __Pyx_XDECREF_SET(__pyx_v_arg, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "PyClTorch.pyx":63
+      /* "PyClTorch.pyx":64
  *         if _allocate:
  *             for arg in args:
  *                 if not isinstance(arg, int):             # <<<<<<<<<<<<<<
@@ -1367,20 +1375,20 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
       __pyx_t_5 = ((!(__pyx_t_1 != 0)) != 0);
       if (__pyx_t_5) {
 
-        /* "PyClTorch.pyx":64
+        /* "PyClTorch.pyx":65
  *             for arg in args:
  *                 if not isinstance(arg, int):
  *                     raise Exception('cannot provide arguments to initializer')             # <<<<<<<<<<<<<<
  *             if len(args) == 0:
  *                 self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  */
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_Exception, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 64; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_Exception, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_Raise(__pyx_t_4, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 64; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "PyClTorch.pyx":63
+        /* "PyClTorch.pyx":64
  *         if _allocate:
  *             for arg in args:
  *                 if not isinstance(arg, int):             # <<<<<<<<<<<<<<
@@ -1389,7 +1397,7 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
  */
       }
 
-      /* "PyClTorch.pyx":62
+      /* "PyClTorch.pyx":63
  * #        print('ClTensor.__cinit__')
  *         if _allocate:
  *             for arg in args:             # <<<<<<<<<<<<<<
@@ -1399,18 +1407,18 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "PyClTorch.pyx":65
+    /* "PyClTorch.pyx":66
  *                 if not isinstance(arg, int):
  *                     raise Exception('cannot provide arguments to initializer')
  *             if len(args) == 0:             # <<<<<<<<<<<<<<
  *                 self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  *             elif len(args) == 1:
  */
-    __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 66; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_5 = ((__pyx_t_3 == 0) != 0);
     if (__pyx_t_5) {
 
-      /* "PyClTorch.pyx":66
+      /* "PyClTorch.pyx":67
  *                     raise Exception('cannot provide arguments to initializer')
  *             if len(args) == 0:
  *                 self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state             # <<<<<<<<<<<<<<
@@ -1419,7 +1427,7 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
  */
       __pyx_v_self->native = THClTensor_newv2(__pyx_v_9PyClTorch_clGlobalState->state, 0);
 
-      /* "PyClTorch.pyx":65
+      /* "PyClTorch.pyx":66
  *                 if not isinstance(arg, int):
  *                     raise Exception('cannot provide arguments to initializer')
  *             if len(args) == 0:             # <<<<<<<<<<<<<<
@@ -1429,31 +1437,31 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
       goto __pyx_L7;
     }
 
-    /* "PyClTorch.pyx":67
+    /* "PyClTorch.pyx":68
  *             if len(args) == 0:
  *                 self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  *             elif len(args) == 1:             # <<<<<<<<<<<<<<
  *                 self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state
  *             elif len(args) == 2:
  */
-    __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_5 = ((__pyx_t_3 == 1) != 0);
     if (__pyx_t_5) {
 
-      /* "PyClTorch.pyx":68
+      /* "PyClTorch.pyx":69
  *                 self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  *             elif len(args) == 1:
  *                 self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state             # <<<<<<<<<<<<<<
  *             elif len(args) == 2:
  *                 self.native = THClTensor_newWithSize2d(clGlobalState.state, 0, args[0], args[1])  # FIXME get device from state
  */
-      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_self->native = THClTensor_newWithSize1d(__pyx_v_9PyClTorch_clGlobalState->state, 0, __pyx_t_6);
 
-      /* "PyClTorch.pyx":67
+      /* "PyClTorch.pyx":68
  *             if len(args) == 0:
  *                 self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  *             elif len(args) == 1:             # <<<<<<<<<<<<<<
@@ -1463,35 +1471,35 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
       goto __pyx_L7;
     }
 
-    /* "PyClTorch.pyx":69
+    /* "PyClTorch.pyx":70
  *             elif len(args) == 1:
  *                 self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state
  *             elif len(args) == 2:             # <<<<<<<<<<<<<<
  *                 self.native = THClTensor_newWithSize2d(clGlobalState.state, 0, args[0], args[1])  # FIXME get device from state
  *             else:
  */
-    __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_5 = ((__pyx_t_3 == 2) != 0);
     if (__pyx_t_5) {
 
-      /* "PyClTorch.pyx":70
+      /* "PyClTorch.pyx":71
  *                 self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state
  *             elif len(args) == 2:
  *                 self.native = THClTensor_newWithSize2d(clGlobalState.state, 0, args[0], args[1])  # FIXME get device from state             # <<<<<<<<<<<<<<
  *             else:
  *                 raise Exception('Not implemented, len(args)=' + str(len(args)))
  */
-      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_self->native = THClTensor_newWithSize2d(__pyx_v_9PyClTorch_clGlobalState->state, 0, __pyx_t_6, __pyx_t_7);
 
-      /* "PyClTorch.pyx":69
+      /* "PyClTorch.pyx":70
  *             elif len(args) == 1:
  *                 self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state
  *             elif len(args) == 2:             # <<<<<<<<<<<<<<
@@ -1501,7 +1509,7 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
       goto __pyx_L7;
     }
 
-    /* "PyClTorch.pyx":72
+    /* "PyClTorch.pyx":73
  *                 self.native = THClTensor_newWithSize2d(clGlobalState.state, 0, args[0], args[1])  # FIXME get device from state
  *             else:
  *                 raise Exception('Not implemented, len(args)=' + str(len(args)))             # <<<<<<<<<<<<<<
@@ -1509,35 +1517,35 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
  *     def __dealloc__(ClTensor self):
  */
     /*else*/ {
-      __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __pyx_t_2 = PyInt_FromSsize_t(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_args); if (unlikely(__pyx_t_3 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyInt_FromSsize_t(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_2);
       PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
       __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_Add(__pyx_kp_s_Not_implemented_len_args, __pyx_t_2); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PyNumber_Add(__pyx_kp_s_Not_implemented_len_args, __pyx_t_2); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_Exception, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_Exception, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_Raise(__pyx_t_4, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L7:;
 
-    /* "PyClTorch.pyx":61
+    /* "PyClTorch.pyx":62
  *     def __cinit__(ClTensor self, *args, _allocate=True):
  * #        print('ClTensor.__cinit__')
  *         if _allocate:             # <<<<<<<<<<<<<<
@@ -1546,7 +1554,7 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
  */
   }
 
-  /* "PyClTorch.pyx":59
+  /* "PyClTorch.pyx":60
  *     cdef THClTensor *native
  * 
  *     def __cinit__(ClTensor self, *args, _allocate=True):             # <<<<<<<<<<<<<<
@@ -1568,7 +1576,7 @@ static int __pyx_pf_9PyClTorch_8ClTensor___cinit__(struct __pyx_obj_9PyClTorch_C
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":74
+/* "PyClTorch.pyx":75
  *                 raise Exception('Not implemented, len(args)=' + str(len(args)))
  * 
  *     def __dealloc__(ClTensor self):             # <<<<<<<<<<<<<<
@@ -1591,7 +1599,7 @@ static void __pyx_pf_9PyClTorch_8ClTensor_2__dealloc__(struct __pyx_obj_9PyClTor
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "PyClTorch.pyx":76
+  /* "PyClTorch.pyx":77
  *     def __dealloc__(ClTensor self):
  * #        print('ClTensor.__dealloc__')
  *         THClTensor_free(clGlobalState.state, self.native)             # <<<<<<<<<<<<<<
@@ -1600,7 +1608,7 @@ static void __pyx_pf_9PyClTorch_8ClTensor_2__dealloc__(struct __pyx_obj_9PyClTor
  */
   THClTensor_free(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native);
 
-  /* "PyClTorch.pyx":74
+  /* "PyClTorch.pyx":75
  *                 raise Exception('Not implemented, len(args)=' + str(len(args)))
  * 
  *     def __dealloc__(ClTensor self):             # <<<<<<<<<<<<<<
@@ -1612,7 +1620,7 @@ static void __pyx_pf_9PyClTorch_8ClTensor_2__dealloc__(struct __pyx_obj_9PyClTor
   __Pyx_RefNannyFinishContext();
 }
 
-/* "PyClTorch.pyx":79
+/* "PyClTorch.pyx":80
  * 
  *     @staticmethod
  *     def new():             # <<<<<<<<<<<<<<
@@ -1646,7 +1654,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_4new() {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("new", 0);
 
-  /* "PyClTorch.pyx":80
+  /* "PyClTorch.pyx":81
  *     @staticmethod
  *     def new():
  *         return ClTensor()             # <<<<<<<<<<<<<<
@@ -1654,13 +1662,13 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_4new() {
  * #        return ClTensor_fromNative(newTensorC, False)
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":79
+  /* "PyClTorch.pyx":80
  * 
  *     @staticmethod
  *     def new():             # <<<<<<<<<<<<<<
@@ -1679,7 +1687,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_4new() {
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":84
+/* "PyClTorch.pyx":85
  * #        return ClTensor_fromNative(newTensorC, False)
  * 
  *     def __repr__(ClTensor self):             # <<<<<<<<<<<<<<
@@ -1714,45 +1722,14 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_6__repr__(struct __pyx_obj_9PyClT
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__repr__", 0);
 
-  /* "PyClTorch.pyx":85
+  /* "PyClTorch.pyx":86
  * 
  *     def __repr__(ClTensor self):
  *         cdef PyTorch._FloatTensor floatTensor = self.float()             # <<<<<<<<<<<<<<
  *         floatRepr = floatTensor.__repr__()
  *         clRepr = floatRepr.replace('FloatTensor', 'ClTensor')
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_float); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = NULL;
-  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-    }
-  }
-  if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  }
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch__FloatTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_v_floatTensor = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "PyClTorch.pyx":86
- *     def __repr__(ClTensor self):
- *         cdef PyTorch._FloatTensor floatTensor = self.float()
- *         floatRepr = floatTensor.__repr__()             # <<<<<<<<<<<<<<
- *         clRepr = floatRepr.replace('FloatTensor', 'ClTensor')
- *         return clRepr
- */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_repr); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_float); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -1772,25 +1749,56 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_6__repr__(struct __pyx_obj_9PyClT
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_floatRepr = __pyx_t_1;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch__FloatTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_floatTensor = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "PyClTorch.pyx":87
+ *     def __repr__(ClTensor self):
+ *         cdef PyTorch._FloatTensor floatTensor = self.float()
+ *         floatRepr = floatTensor.__repr__()             # <<<<<<<<<<<<<<
+ *         clRepr = floatRepr.replace('FloatTensor', 'ClTensor')
+ *         return clRepr
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_repr); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_floatRepr = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "PyClTorch.pyx":88
  *         cdef PyTorch._FloatTensor floatTensor = self.float()
  *         floatRepr = floatTensor.__repr__()
  *         clRepr = floatRepr.replace('FloatTensor', 'ClTensor')             # <<<<<<<<<<<<<<
  *         return clRepr
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_floatRepr, __pyx_n_s_replace); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_floatRepr, __pyx_n_s_replace); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_clRepr = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "PyClTorch.pyx":88
+  /* "PyClTorch.pyx":89
  *         floatRepr = floatTensor.__repr__()
  *         clRepr = floatRepr.replace('FloatTensor', 'ClTensor')
  *         return clRepr             # <<<<<<<<<<<<<<
@@ -1802,7 +1810,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_6__repr__(struct __pyx_obj_9PyClT
   __pyx_r = __pyx_v_clRepr;
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":84
+  /* "PyClTorch.pyx":85
  * #        return ClTensor_fromNative(newTensorC, False)
  * 
  *     def __repr__(ClTensor self):             # <<<<<<<<<<<<<<
@@ -1826,7 +1834,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_6__repr__(struct __pyx_obj_9PyClT
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":90
+/* "PyClTorch.pyx":91
  *         return clRepr
  * 
  *     def float(ClTensor self):             # <<<<<<<<<<<<<<
@@ -1863,45 +1871,14 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("float", 0);
 
-  /* "PyClTorch.pyx":91
+  /* "PyClTorch.pyx":92
  * 
  *     def float(ClTensor self):
  *         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()             # <<<<<<<<<<<<<<
  *         cdef PyTorch._FloatTensor size = self.size()
  *         if size is None:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = NULL;
-  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-    }
-  }
-  if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  }
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch__FloatTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_v_floatTensor = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "PyClTorch.pyx":92
- *     def float(ClTensor self):
- *         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
- *         cdef PyTorch._FloatTensor size = self.size()             # <<<<<<<<<<<<<<
- *         if size is None:
- *             return PyTorch._FloatTensor()
- */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_size); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -1922,10 +1899,41 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch__FloatTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_v_size = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_1);
+  __pyx_v_floatTensor = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "PyClTorch.pyx":93
+ *     def float(ClTensor self):
+ *         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
+ *         cdef PyTorch._FloatTensor size = self.size()             # <<<<<<<<<<<<<<
+ *         if size is None:
+ *             return PyTorch._FloatTensor()
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_size); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch__FloatTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_size = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "PyClTorch.pyx":94
  *         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
  *         cdef PyTorch._FloatTensor size = self.size()
  *         if size is None:             # <<<<<<<<<<<<<<
@@ -1936,7 +1944,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
   __pyx_t_5 = (__pyx_t_4 != 0);
   if (__pyx_t_5) {
 
-    /* "PyClTorch.pyx":94
+    /* "PyClTorch.pyx":95
  *         cdef PyTorch._FloatTensor size = self.size()
  *         if size is None:
  *             return PyTorch._FloatTensor()             # <<<<<<<<<<<<<<
@@ -1944,13 +1952,13 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
  *             return PyTorch._FloatTensor()
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 95; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "PyClTorch.pyx":93
+    /* "PyClTorch.pyx":94
  *         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
  *         cdef PyTorch._FloatTensor size = self.size()
  *         if size is None:             # <<<<<<<<<<<<<<
@@ -1959,7 +1967,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
  */
   }
 
-  /* "PyClTorch.pyx":95
+  /* "PyClTorch.pyx":96
  *         if size is None:
  *             return PyTorch._FloatTensor()
  *         if size.dims() == 0:             # <<<<<<<<<<<<<<
@@ -1969,7 +1977,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
   __pyx_t_5 = ((((struct __pyx_vtabstruct_7PyTorch__FloatTensor *)__pyx_v_size->__pyx_vtab)->dims(__pyx_v_size, 0) == 0) != 0);
   if (__pyx_t_5) {
 
-    /* "PyClTorch.pyx":96
+    /* "PyClTorch.pyx":97
  *             return PyTorch._FloatTensor()
  *         if size.dims() == 0:
  *             return PyTorch._FloatTensor()             # <<<<<<<<<<<<<<
@@ -1977,13 +1985,13 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
  *         THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "PyClTorch.pyx":95
+    /* "PyClTorch.pyx":96
  *         if size is None:
  *             return PyTorch._FloatTensor()
  *         if size.dims() == 0:             # <<<<<<<<<<<<<<
@@ -1992,14 +2000,14 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
  */
   }
 
-  /* "PyClTorch.pyx":97
+  /* "PyClTorch.pyx":98
  *         if size.dims() == 0:
  *             return PyTorch._FloatTensor()
  *         floatTensor.resize(size)             # <<<<<<<<<<<<<<
  *         THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
  *         return floatTensor
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_resize); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_resize); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 98; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -2012,23 +2020,23 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, ((PyObject *)__pyx_v_size)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, ((PyObject *)__pyx_v_size)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 98; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 98; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3); __pyx_t_3 = NULL;
     __Pyx_INCREF(((PyObject *)__pyx_v_size));
     __Pyx_GIVEREF(((PyObject *)__pyx_v_size));
     PyTuple_SET_ITEM(__pyx_t_6, 0+1, ((PyObject *)__pyx_v_size));
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 98; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":98
+  /* "PyClTorch.pyx":99
  *             return PyTorch._FloatTensor()
  *         floatTensor.resize(size)
  *         THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)             # <<<<<<<<<<<<<<
@@ -2037,7 +2045,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
  */
   THFloatTensor_copyCl(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_floatTensor->thFloatTensor, __pyx_v_self->native);
 
-  /* "PyClTorch.pyx":99
+  /* "PyClTorch.pyx":100
  *         floatTensor.resize(size)
  *         THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
  *         return floatTensor             # <<<<<<<<<<<<<<
@@ -2049,7 +2057,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
   __pyx_r = ((PyObject *)__pyx_v_floatTensor);
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":90
+  /* "PyClTorch.pyx":91
  *         return clRepr
  * 
  *     def float(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2073,7 +2081,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8float(struct __pyx_obj_9PyClTorc
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":101
+/* "PyClTorch.pyx":102
  *         return floatTensor
  * 
  *     def copy(ClTensor self, PyTorch._FloatTensor src):             # <<<<<<<<<<<<<<
@@ -2090,7 +2098,7 @@ static PyObject *__pyx_pw_9PyClTorch_8ClTensor_11copy(PyObject *__pyx_v_self, Py
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("copy (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_src), __pyx_ptype_7PyTorch__FloatTensor, 1, "src", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_src), __pyx_ptype_7PyTorch__FloatTensor, 1, "src", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_pf_9PyClTorch_8ClTensor_10copy(((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_v_self), ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_v_src));
 
   /* function exit code */
@@ -2107,7 +2115,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_10copy(struct __pyx_obj_9PyClTorc
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("copy", 0);
 
-  /* "PyClTorch.pyx":102
+  /* "PyClTorch.pyx":103
  * 
  *     def copy(ClTensor self, PyTorch._FloatTensor src):
  *         THClTensor_copyFloat(clGlobalState.state, self.native, src.thFloatTensor)             # <<<<<<<<<<<<<<
@@ -2116,7 +2124,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_10copy(struct __pyx_obj_9PyClTorc
  */
   THClTensor_copyFloat(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native, __pyx_v_src->thFloatTensor);
 
-  /* "PyClTorch.pyx":103
+  /* "PyClTorch.pyx":104
  *     def copy(ClTensor self, PyTorch._FloatTensor src):
  *         THClTensor_copyFloat(clGlobalState.state, self.native, src.thFloatTensor)
  *         return self             # <<<<<<<<<<<<<<
@@ -2128,7 +2136,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_10copy(struct __pyx_obj_9PyClTorc
   __pyx_r = ((PyObject *)__pyx_v_self);
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":101
+  /* "PyClTorch.pyx":102
  *         return floatTensor
  * 
  *     def copy(ClTensor self, PyTorch._FloatTensor src):             # <<<<<<<<<<<<<<
@@ -2143,7 +2151,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_10copy(struct __pyx_obj_9PyClTorc
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":105
+/* "PyClTorch.pyx":106
  *         return self
  * 
  *     cpdef int dims(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2168,7 +2176,7 @@ static int __pyx_f_9PyClTorch_8ClTensor_dims(struct __pyx_obj_9PyClTorch_ClTenso
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_dims); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_dims); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9PyClTorch_8ClTensor_13dims)) {
       __Pyx_INCREF(__pyx_t_1);
@@ -2183,14 +2191,14 @@ static int __pyx_f_9PyClTorch_8ClTensor_dims(struct __pyx_obj_9PyClTorch_ClTenso
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_r = __pyx_t_5;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -2199,7 +2207,7 @@ static int __pyx_f_9PyClTorch_8ClTensor_dims(struct __pyx_obj_9PyClTorch_ClTenso
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "PyClTorch.pyx":106
+  /* "PyClTorch.pyx":107
  * 
  *     cpdef int dims(ClTensor self):
  *         return THClTensor_nDimension(clGlobalState.state, self.native)             # <<<<<<<<<<<<<<
@@ -2209,7 +2217,7 @@ static int __pyx_f_9PyClTorch_8ClTensor_dims(struct __pyx_obj_9PyClTorch_ClTenso
   __pyx_r = THClTensor_nDimension(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native);
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":105
+  /* "PyClTorch.pyx":106
  *         return self
  * 
  *     cpdef int dims(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2252,7 +2260,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_12dims(struct __pyx_obj_9PyClTorc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("dims", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9PyClTorch_8ClTensor_dims(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9PyClTorch_8ClTensor_dims(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2269,7 +2277,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_12dims(struct __pyx_obj_9PyClTorc
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":108
+/* "PyClTorch.pyx":109
  *         return THClTensor_nDimension(clGlobalState.state, self.native)
  * 
  *     def size(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2306,7 +2314,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("size", 0);
 
-  /* "PyClTorch.pyx":109
+  /* "PyClTorch.pyx":110
  * 
  *     def size(ClTensor self):
  *         cdef int dims = self.dims()             # <<<<<<<<<<<<<<
@@ -2315,7 +2323,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
  */
   __pyx_v_dims = ((struct __pyx_vtabstruct_9PyClTorch_ClTensor *)__pyx_v_self->__pyx_vtab)->dims(__pyx_v_self, 0);
 
-  /* "PyClTorch.pyx":111
+  /* "PyClTorch.pyx":112
  *         cdef int dims = self.dims()
  *         cdef PyTorch._FloatTensor size
  *         if dims >= 0:             # <<<<<<<<<<<<<<
@@ -2325,27 +2333,27 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
   __pyx_t_1 = ((__pyx_v_dims >= 0) != 0);
   if (__pyx_t_1) {
 
-    /* "PyClTorch.pyx":112
+    /* "PyClTorch.pyx":113
  *         cdef PyTorch._FloatTensor size
  *         if dims >= 0:
  *             size = PyTorch._FloatTensor(dims)             # <<<<<<<<<<<<<<
  *             for d in range(dims):
  *                 size.set1d(d, THClTensor_size(clGlobalState.state, self.native, d))
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_dims); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_dims); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_size = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "PyClTorch.pyx":113
+    /* "PyClTorch.pyx":114
  *         if dims >= 0:
  *             size = PyTorch._FloatTensor(dims)
  *             for d in range(dims):             # <<<<<<<<<<<<<<
@@ -2356,19 +2364,19 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_d = __pyx_t_5;
 
-      /* "PyClTorch.pyx":114
+      /* "PyClTorch.pyx":115
  *             size = PyTorch._FloatTensor(dims)
  *             for d in range(dims):
  *                 size.set1d(d, THClTensor_size(clGlobalState.state, self.native, d))             # <<<<<<<<<<<<<<
  *             return size
  *         else:
  */
-      __pyx_t_2 = ((struct __pyx_vtabstruct_7PyTorch__FloatTensor *)__pyx_v_size->__pyx_vtab)->set1d(__pyx_v_size, __pyx_v_d, THClTensor_size(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native, __pyx_v_d), 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = ((struct __pyx_vtabstruct_7PyTorch__FloatTensor *)__pyx_v_size->__pyx_vtab)->set1d(__pyx_v_size, __pyx_v_d, THClTensor_size(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native, __pyx_v_d), 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
 
-    /* "PyClTorch.pyx":115
+    /* "PyClTorch.pyx":116
  *             for d in range(dims):
  *                 size.set1d(d, THClTensor_size(clGlobalState.state, self.native, d))
  *             return size             # <<<<<<<<<<<<<<
@@ -2380,7 +2388,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
     __pyx_r = ((PyObject *)__pyx_v_size);
     goto __pyx_L0;
 
-    /* "PyClTorch.pyx":111
+    /* "PyClTorch.pyx":112
  *         cdef int dims = self.dims()
  *         cdef PyTorch._FloatTensor size
  *         if dims >= 0:             # <<<<<<<<<<<<<<
@@ -2389,7 +2397,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
  */
   }
 
-  /* "PyClTorch.pyx":117
+  /* "PyClTorch.pyx":118
  *             return size
  *         else:
  *             return None  # not sure how to handle this yet             # <<<<<<<<<<<<<<
@@ -2403,7 +2411,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
     goto __pyx_L0;
   }
 
-  /* "PyClTorch.pyx":108
+  /* "PyClTorch.pyx":109
  *         return THClTensor_nDimension(clGlobalState.state, self.native)
  * 
  *     def size(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2424,7 +2432,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_14size(struct __pyx_obj_9PyClTorc
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":119
+/* "PyClTorch.pyx":120
  *             return None  # not sure how to handle this yet
  * 
  *     def nElement(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2454,7 +2462,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_16nElement(struct __pyx_obj_9PyCl
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("nElement", 0);
 
-  /* "PyClTorch.pyx":120
+  /* "PyClTorch.pyx":121
  * 
  *     def nElement(ClTensor self):
  *         return THClTensor_nElement(clGlobalState.state, self.native)             # <<<<<<<<<<<<<<
@@ -2462,13 +2470,13 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_16nElement(struct __pyx_obj_9PyCl
  *     def sum(ClTensor self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_long(THClTensor_nElement(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_long(THClTensor_nElement(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":119
+  /* "PyClTorch.pyx":120
  *             return None  # not sure how to handle this yet
  * 
  *     def nElement(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2487,7 +2495,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_16nElement(struct __pyx_obj_9PyCl
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":122
+/* "PyClTorch.pyx":123
  *         return THClTensor_nElement(clGlobalState.state, self.native)
  * 
  *     def sum(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2517,7 +2525,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_18sum(struct __pyx_obj_9PyClTorch
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("sum", 0);
 
-  /* "PyClTorch.pyx":123
+  /* "PyClTorch.pyx":124
  * 
  *     def sum(ClTensor self):
  *         return THClTensor_sumall(clGlobalState.state, self.native)             # <<<<<<<<<<<<<<
@@ -2525,13 +2533,13 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_18sum(struct __pyx_obj_9PyClTorch
  *     def __add__(ClTensor self, float scalar):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(THClTensor_sumall(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyFloat_FromDouble(THClTensor_sumall(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":122
+  /* "PyClTorch.pyx":123
  *         return THClTensor_nElement(clGlobalState.state, self.native)
  * 
  *     def sum(ClTensor self):             # <<<<<<<<<<<<<<
@@ -2550,7 +2558,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_18sum(struct __pyx_obj_9PyClTorch
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":125
+/* "PyClTorch.pyx":126
  *         return THClTensor_sumall(clGlobalState.state, self.native)
  * 
  *     def __add__(ClTensor self, float scalar):             # <<<<<<<<<<<<<<
@@ -2569,7 +2577,7 @@ static PyObject *__pyx_pw_9PyClTorch_8ClTensor_21__add__(PyObject *__pyx_v_self,
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__add__ (wrapper)", 0);
   assert(__pyx_arg_scalar); {
-    __pyx_v_scalar = __pyx_PyFloat_AsFloat(__pyx_arg_scalar); if (unlikely((__pyx_v_scalar == (float)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_scalar = __pyx_PyFloat_AsFloat(__pyx_arg_scalar); if (unlikely((__pyx_v_scalar == (float)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2577,7 +2585,7 @@ static PyObject *__pyx_pw_9PyClTorch_8ClTensor_21__add__(PyObject *__pyx_v_self,
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_self), __pyx_ptype_9PyClTorch_ClTensor, 1, "self", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_self), __pyx_ptype_9PyClTorch_ClTensor, 1, "self", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_pf_9PyClTorch_8ClTensor_20__add__(((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_v_self), ((float)__pyx_v_scalar));
 
   /* function exit code */
@@ -2599,19 +2607,19 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_20__add__(struct __pyx_obj_9PyClT
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__add__", 0);
 
-  /* "PyClTorch.pyx":126
+  /* "PyClTorch.pyx":127
  * 
  *     def __add__(ClTensor self, float scalar):
  *         cdef ClTensor res = ClTensor()             # <<<<<<<<<<<<<<
  *         THClTensor_add(clGlobalState.state, res.native, self.native, scalar)
  *         return res
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":127
+  /* "PyClTorch.pyx":128
  *     def __add__(ClTensor self, float scalar):
  *         cdef ClTensor res = ClTensor()
  *         THClTensor_add(clGlobalState.state, res.native, self.native, scalar)             # <<<<<<<<<<<<<<
@@ -2620,19 +2628,19 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_20__add__(struct __pyx_obj_9PyClT
  */
   THClTensor_add(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_res->native, __pyx_v_self->native, __pyx_v_scalar);
 
-  /* "PyClTorch.pyx":128
+  /* "PyClTorch.pyx":129
  *         cdef ClTensor res = ClTensor()
  *         THClTensor_add(clGlobalState.state, res.native, self.native, scalar)
  *         return res             # <<<<<<<<<<<<<<
  * 
- * cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
+ *     def resizeAs(ClTensor self, ClTensor model):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(((PyObject *)__pyx_v_res));
   __pyx_r = ((PyObject *)__pyx_v_res);
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":125
+  /* "PyClTorch.pyx":126
  *         return THClTensor_sumall(clGlobalState.state, self.native)
  * 
  *     def __add__(ClTensor self, float scalar):             # <<<<<<<<<<<<<<
@@ -2652,8 +2660,360 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_20__add__(struct __pyx_obj_9PyClT
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":130
+/* "PyClTorch.pyx":131
  *         return res
+ * 
+ *     def resizeAs(ClTensor self, ClTensor model):             # <<<<<<<<<<<<<<
+ *         THClTensor_resizeAs(clGlobalState.state, self.native, model.native)
+ *         return self
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9PyClTorch_8ClTensor_23resizeAs(PyObject *__pyx_v_self, PyObject *__pyx_v_model); /*proto*/
+static PyObject *__pyx_pw_9PyClTorch_8ClTensor_23resizeAs(PyObject *__pyx_v_self, PyObject *__pyx_v_model) {
+  CYTHON_UNUSED int __pyx_lineno = 0;
+  CYTHON_UNUSED const char *__pyx_filename = NULL;
+  CYTHON_UNUSED int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("resizeAs (wrapper)", 0);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_model), __pyx_ptype_9PyClTorch_ClTensor, 1, "model", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_r = __pyx_pf_9PyClTorch_8ClTensor_22resizeAs(((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_v_self), ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_v_model));
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9PyClTorch_8ClTensor_22resizeAs(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_model) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("resizeAs", 0);
+
+  /* "PyClTorch.pyx":132
+ * 
+ *     def resizeAs(ClTensor self, ClTensor model):
+ *         THClTensor_resizeAs(clGlobalState.state, self.native, model.native)             # <<<<<<<<<<<<<<
+ *         return self
+ * 
+ */
+  THClTensor_resizeAs(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native, __pyx_v_model->native);
+
+  /* "PyClTorch.pyx":133
+ *     def resizeAs(ClTensor self, ClTensor model):
+ *         THClTensor_resizeAs(clGlobalState.state, self.native, model.native)
+ *         return self             # <<<<<<<<<<<<<<
+ * 
+ *     def uniform(ClTensor self, float a=0, float b=1):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(((PyObject *)__pyx_v_self));
+  __pyx_r = ((PyObject *)__pyx_v_self);
+  goto __pyx_L0;
+
+  /* "PyClTorch.pyx":131
+ *         return res
+ * 
+ *     def resizeAs(ClTensor self, ClTensor model):             # <<<<<<<<<<<<<<
+ *         THClTensor_resizeAs(clGlobalState.state, self.native, model.native)
+ *         return self
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "PyClTorch.pyx":135
+ *         return self
+ * 
+ *     def uniform(ClTensor self, float a=0, float b=1):             # <<<<<<<<<<<<<<
+ *         size = self.size()
+ *         print('size', size)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9PyClTorch_8ClTensor_25uniform(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9PyClTorch_8ClTensor_25uniform(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  float __pyx_v_a;
+  float __pyx_v_b;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("uniform (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_a,&__pyx_n_s_b,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_a);
+          if (value) { values[0] = value; kw_args--; }
+        }
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_b);
+          if (value) { values[1] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "uniform") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    if (values[0]) {
+      __pyx_v_a = __pyx_PyFloat_AsFloat(values[0]); if (unlikely((__pyx_v_a == (float)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    } else {
+      __pyx_v_a = ((float)0.0);
+    }
+    if (values[1]) {
+      __pyx_v_b = __pyx_PyFloat_AsFloat(values[1]); if (unlikely((__pyx_v_b == (float)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    } else {
+      __pyx_v_b = ((float)1.0);
+    }
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("uniform", 0, 0, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("PyClTorch.ClTensor.uniform", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_9PyClTorch_8ClTensor_24uniform(((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_v_self), __pyx_v_a, __pyx_v_b);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9PyClTorch_8ClTensor_24uniform(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, float __pyx_v_a, float __pyx_v_b) {
+  PyObject *__pyx_v_size = NULL;
+  PyObject *__pyx_v_floatTensor = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  Py_ssize_t __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("uniform", 0);
+
+  /* "PyClTorch.pyx":136
+ * 
+ *     def uniform(ClTensor self, float a=0, float b=1):
+ *         size = self.size()             # <<<<<<<<<<<<<<
+ *         print('size', size)
+ *         floatTensor = PyTorch._FloatTensor(size)
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_size); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_size = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "PyClTorch.pyx":137
+ *     def uniform(ClTensor self, float a=0, float b=1):
+ *         size = self.size()
+ *         print('size', size)             # <<<<<<<<<<<<<<
+ *         floatTensor = PyTorch._FloatTensor(size)
+ *         floatTensor.uniform(a, b)
+ */
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_n_s_size);
+  __Pyx_GIVEREF(__pyx_n_s_size);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_size);
+  __Pyx_INCREF(__pyx_v_size);
+  __Pyx_GIVEREF(__pyx_v_size);
+  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_size);
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "PyClTorch.pyx":138
+ *         size = self.size()
+ *         print('size', size)
+ *         floatTensor = PyTorch._FloatTensor(size)             # <<<<<<<<<<<<<<
+ *         floatTensor.uniform(a, b)
+ *         self.copy(floatTensor)
+ */
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_v_size);
+  __Pyx_GIVEREF(__pyx_v_size);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_size);
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7PyTorch__FloatTensor), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_floatTensor = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "PyClTorch.pyx":139
+ *         print('size', size)
+ *         floatTensor = PyTorch._FloatTensor(size)
+ *         floatTensor.uniform(a, b)             # <<<<<<<<<<<<<<
+ *         self.copy(floatTensor)
+ *         return self
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_floatTensor, __pyx_n_s_uniform); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_b); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = NULL;
+  __pyx_t_6 = 0;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_6 = 1;
+    }
+  }
+  __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_7);
+  if (__pyx_t_5) {
+    __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
+  }
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_7, 0+__pyx_t_6, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_6, __pyx_t_4);
+  __pyx_t_3 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "PyClTorch.pyx":140
+ *         floatTensor = PyTorch._FloatTensor(size)
+ *         floatTensor.uniform(a, b)
+ *         self.copy(floatTensor)             # <<<<<<<<<<<<<<
+ *         return self
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_copy); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_7 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_7)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_7);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (!__pyx_t_7) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_floatTensor); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_7); __pyx_t_7 = NULL;
+    __Pyx_INCREF(__pyx_v_floatTensor);
+    __Pyx_GIVEREF(__pyx_v_floatTensor);
+    PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_floatTensor);
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "PyClTorch.pyx":141
+ *         floatTensor.uniform(a, b)
+ *         self.copy(floatTensor)
+ *         return self             # <<<<<<<<<<<<<<
+ * 
+ * cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(((PyObject *)__pyx_v_self));
+  __pyx_r = ((PyObject *)__pyx_v_self);
+  goto __pyx_L0;
+
+  /* "PyClTorch.pyx":135
+ *         return self
+ * 
+ *     def uniform(ClTensor self, float a=0, float b=1):             # <<<<<<<<<<<<<<
+ *         size = self.size()
+ *         print('size', size)
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_AddTraceback("PyClTorch.ClTensor.uniform", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_size);
+  __Pyx_XDECREF(__pyx_v_floatTensor);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "PyClTorch.pyx":143
+ *         return self
  * 
  * cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):             # <<<<<<<<<<<<<<
  *     cdef ClTensor tensor = ClTensor(_allocate=False )
@@ -2678,23 +3038,23 @@ static PyObject *__pyx_f_9PyClTorch_ClTensor_fromNative(struct THClTensor *__pyx
     }
   }
 
-  /* "PyClTorch.pyx":131
+  /* "PyClTorch.pyx":144
  * 
  * cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
  *     cdef ClTensor tensor = ClTensor(_allocate=False )             # <<<<<<<<<<<<<<
  *     tensor.native = tensorC
  *     if retain:
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_allocate, Py_False) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_allocate, Py_False) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_tensor = ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "PyClTorch.pyx":132
+  /* "PyClTorch.pyx":145
  * cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
  *     cdef ClTensor tensor = ClTensor(_allocate=False )
  *     tensor.native = tensorC             # <<<<<<<<<<<<<<
@@ -2703,17 +3063,17 @@ static PyObject *__pyx_f_9PyClTorch_ClTensor_fromNative(struct THClTensor *__pyx
  */
   __pyx_v_tensor->native = __pyx_v_tensorC;
 
-  /* "PyClTorch.pyx":133
+  /* "PyClTorch.pyx":146
  *     cdef ClTensor tensor = ClTensor(_allocate=False )
  *     tensor.native = tensorC
  *     if retain:             # <<<<<<<<<<<<<<
  *         THClTensor_retain(clGlobalState.state, tensorC)
  *     return tensor
  */
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_retain); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_retain); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_3) {
 
-    /* "PyClTorch.pyx":134
+    /* "PyClTorch.pyx":147
  *     tensor.native = tensorC
  *     if retain:
  *         THClTensor_retain(clGlobalState.state, tensorC)             # <<<<<<<<<<<<<<
@@ -2722,7 +3082,7 @@ static PyObject *__pyx_f_9PyClTorch_ClTensor_fromNative(struct THClTensor *__pyx
  */
     THClTensor_retain(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_tensorC);
 
-    /* "PyClTorch.pyx":133
+    /* "PyClTorch.pyx":146
  *     cdef ClTensor tensor = ClTensor(_allocate=False )
  *     tensor.native = tensorC
  *     if retain:             # <<<<<<<<<<<<<<
@@ -2731,7 +3091,7 @@ static PyObject *__pyx_f_9PyClTorch_ClTensor_fromNative(struct THClTensor *__pyx
  */
   }
 
-  /* "PyClTorch.pyx":135
+  /* "PyClTorch.pyx":148
  *     if retain:
  *         THClTensor_retain(clGlobalState.state, tensorC)
  *     return tensor             # <<<<<<<<<<<<<<
@@ -2743,8 +3103,8 @@ static PyObject *__pyx_f_9PyClTorch_ClTensor_fromNative(struct THClTensor *__pyx
   __pyx_r = ((PyObject *)__pyx_v_tensor);
   goto __pyx_L0;
 
-  /* "PyClTorch.pyx":130
- *         return res
+  /* "PyClTorch.pyx":143
+ *         return self
  * 
  * cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):             # <<<<<<<<<<<<<<
  *     cdef ClTensor tensor = ClTensor(_allocate=False )
@@ -2764,7 +3124,7 @@ static PyObject *__pyx_f_9PyClTorch_ClTensor_fromNative(struct THClTensor *__pyx
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":137
+/* "PyClTorch.pyx":150
  *     return tensor
  * 
  * def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):             # <<<<<<<<<<<<<<
@@ -2782,7 +3142,7 @@ static PyObject *__pyx_pw_9PyClTorch_5FloatTensorToClTensor(PyObject *__pyx_self
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("FloatTensorToClTensor (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_floatTensor), __pyx_ptype_7PyTorch__FloatTensor, 1, "floatTensor", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_floatTensor), __pyx_ptype_7PyTorch__FloatTensor, 1, "floatTensor", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_pf_9PyClTorch_4FloatTensorToClTensor(__pyx_self, ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_v_floatTensor));
 
   /* function exit code */
@@ -2812,14 +3172,14 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("FloatTensorToClTensor", 0);
 
-  /* "PyClTorch.pyx":138
+  /* "PyClTorch.pyx":151
  * 
  * def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
  *     cdef PyTorch._FloatTensor size = floatTensor.size()             # <<<<<<<<<<<<<<
  *     cdef ClTensor clTensor
  *     cdef int nElement = floatTensor.nElement()
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_size); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_size); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -2832,25 +3192,25 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch__FloatTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch__FloatTensor))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_size = ((struct __pyx_obj_7PyTorch__FloatTensor *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":140
+  /* "PyClTorch.pyx":153
  *     cdef PyTorch._FloatTensor size = floatTensor.size()
  *     cdef ClTensor clTensor
  *     cdef int nElement = floatTensor.nElement()             # <<<<<<<<<<<<<<
  *     if nElement > 0:
  *         if floatTensor.dims() == 1:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_nElement); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_floatTensor), __pyx_n_s_nElement); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -2863,18 +3223,18 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_nElement = __pyx_t_4;
 
-  /* "PyClTorch.pyx":141
+  /* "PyClTorch.pyx":154
  *     cdef ClTensor clTensor
  *     cdef int nElement = floatTensor.nElement()
  *     if nElement > 0:             # <<<<<<<<<<<<<<
@@ -2884,7 +3244,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
   __pyx_t_5 = ((__pyx_v_nElement > 0) != 0);
   if (__pyx_t_5) {
 
-    /* "PyClTorch.pyx":142
+    /* "PyClTorch.pyx":155
  *     cdef int nElement = floatTensor.nElement()
  *     if nElement > 0:
  *         if floatTensor.dims() == 1:             # <<<<<<<<<<<<<<
@@ -2894,30 +3254,30 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
     __pyx_t_5 = ((((struct __pyx_vtabstruct_7PyTorch__FloatTensor *)__pyx_v_floatTensor->__pyx_vtab)->dims(__pyx_v_floatTensor, 0) == 1) != 0);
     if (__pyx_t_5) {
 
-      /* "PyClTorch.pyx":143
+      /* "PyClTorch.pyx":156
  *     if nElement > 0:
  *         if floatTensor.dims() == 1:
  *             clTensor = ClTensor(int(size[0]))             # <<<<<<<<<<<<<<
  *         elif floatTensor.dims() == 2:
  *             clTensor = ClTensor(int(size[0]), int(size[1]))
  */
-      __pyx_t_1 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_1 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_2 = PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_GIVEREF(__pyx_t_2);
       PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
       __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_v_clTensor = ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "PyClTorch.pyx":142
+      /* "PyClTorch.pyx":155
  *     cdef int nElement = floatTensor.nElement()
  *     if nElement > 0:
  *         if floatTensor.dims() == 1:             # <<<<<<<<<<<<<<
@@ -2927,7 +3287,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       goto __pyx_L4;
     }
 
-    /* "PyClTorch.pyx":144
+    /* "PyClTorch.pyx":157
  *         if floatTensor.dims() == 1:
  *             clTensor = ClTensor(int(size[0]))
  *         elif floatTensor.dims() == 2:             # <<<<<<<<<<<<<<
@@ -2937,24 +3297,24 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
     __pyx_t_5 = ((((struct __pyx_vtabstruct_7PyTorch__FloatTensor *)__pyx_v_floatTensor->__pyx_vtab)->dims(__pyx_v_floatTensor, 0) == 2) != 0);
     if (__pyx_t_5) {
 
-      /* "PyClTorch.pyx":145
+      /* "PyClTorch.pyx":158
  *             clTensor = ClTensor(int(size[0]))
  *         elif floatTensor.dims() == 2:
  *             clTensor = ClTensor(int(size[0]), int(size[1]))             # <<<<<<<<<<<<<<
  *         elif floatTensor.dims() == 3:
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]))
  */
-      __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_1 = PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GIVEREF(__pyx_t_1);
       PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
@@ -2962,13 +3322,13 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
       __pyx_t_1 = 0;
       __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_clTensor = ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "PyClTorch.pyx":144
+      /* "PyClTorch.pyx":157
  *         if floatTensor.dims() == 1:
  *             clTensor = ClTensor(int(size[0]))
  *         elif floatTensor.dims() == 2:             # <<<<<<<<<<<<<<
@@ -2978,7 +3338,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       goto __pyx_L4;
     }
 
-    /* "PyClTorch.pyx":146
+    /* "PyClTorch.pyx":159
  *         elif floatTensor.dims() == 2:
  *             clTensor = ClTensor(int(size[0]), int(size[1]))
  *         elif floatTensor.dims() == 3:             # <<<<<<<<<<<<<<
@@ -2988,29 +3348,29 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
     __pyx_t_5 = ((((struct __pyx_vtabstruct_7PyTorch__FloatTensor *)__pyx_v_floatTensor->__pyx_vtab)->dims(__pyx_v_floatTensor, 0) == 3) != 0);
     if (__pyx_t_5) {
 
-      /* "PyClTorch.pyx":147
+      /* "PyClTorch.pyx":160
  *             clTensor = ClTensor(int(size[0]), int(size[1]))
  *         elif floatTensor.dims() == 3:
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]))             # <<<<<<<<<<<<<<
  *         elif floatTensor.dims() == 4:
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]), int(size[3]))
  */
-      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_2);
       PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
@@ -3021,13 +3381,13 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       __pyx_t_2 = 0;
       __pyx_t_1 = 0;
       __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_v_clTensor = ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_t_6);
       __pyx_t_6 = 0;
 
-      /* "PyClTorch.pyx":146
+      /* "PyClTorch.pyx":159
  *         elif floatTensor.dims() == 2:
  *             clTensor = ClTensor(int(size[0]), int(size[1]))
  *         elif floatTensor.dims() == 3:             # <<<<<<<<<<<<<<
@@ -3037,7 +3397,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       goto __pyx_L4;
     }
 
-    /* "PyClTorch.pyx":148
+    /* "PyClTorch.pyx":161
  *         elif floatTensor.dims() == 3:
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]))
  *         elif floatTensor.dims() == 4:             # <<<<<<<<<<<<<<
@@ -3047,34 +3407,34 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
     __pyx_t_5 = ((((struct __pyx_vtabstruct_7PyTorch__FloatTensor *)__pyx_v_floatTensor->__pyx_vtab)->dims(__pyx_v_floatTensor, 0) == 4) != 0);
     if (__pyx_t_5) {
 
-      /* "PyClTorch.pyx":149
+      /* "PyClTorch.pyx":162
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]))
  *         elif floatTensor.dims() == 4:
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]), int(size[3]))             # <<<<<<<<<<<<<<
  *         else:
  *             raise Exception('not implemented')
  */
-      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_3 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_1 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_2 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_size), 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -3088,13 +3448,13 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       __pyx_t_1 = 0;
       __pyx_t_2 = 0;
       __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_6, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 149; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_t_6, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_v_clTensor = ((struct __pyx_obj_9PyClTorch_ClTensor *)__pyx_t_7);
       __pyx_t_7 = 0;
 
-      /* "PyClTorch.pyx":148
+      /* "PyClTorch.pyx":161
  *         elif floatTensor.dims() == 3:
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]))
  *         elif floatTensor.dims() == 4:             # <<<<<<<<<<<<<<
@@ -3104,7 +3464,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       goto __pyx_L4;
     }
 
-    /* "PyClTorch.pyx":151
+    /* "PyClTorch.pyx":164
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]), int(size[3]))
  *         else:
  *             raise Exception('not implemented')             # <<<<<<<<<<<<<<
@@ -3112,22 +3472,22 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
  *         return clTensor
  */
     /*else*/ {
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_Exception, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_Exception, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_Raise(__pyx_t_7, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L4:;
 
-    /* "PyClTorch.pyx":152
+    /* "PyClTorch.pyx":165
  *         else:
  *             raise Exception('not implemented')
  *         clTensor.copy(floatTensor)             # <<<<<<<<<<<<<<
  *         return clTensor
  *     else:
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_clTensor), __pyx_n_s_copy); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_clTensor), __pyx_n_s_copy); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_2 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_6))) {
@@ -3140,23 +3500,23 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
       }
     }
     if (!__pyx_t_2) {
-      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_6, ((PyObject *)__pyx_v_floatTensor)); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_6, ((PyObject *)__pyx_v_floatTensor)); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
     } else {
-      __pyx_t_1 = PyTuple_New(1+1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyTuple_New(1+1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2); __pyx_t_2 = NULL;
       __Pyx_INCREF(((PyObject *)__pyx_v_floatTensor));
       __Pyx_GIVEREF(((PyObject *)__pyx_v_floatTensor));
       PyTuple_SET_ITEM(__pyx_t_1, 0+1, ((PyObject *)__pyx_v_floatTensor));
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_1, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_1, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "PyClTorch.pyx":153
+    /* "PyClTorch.pyx":166
  *             raise Exception('not implemented')
  *         clTensor.copy(floatTensor)
  *         return clTensor             # <<<<<<<<<<<<<<
@@ -3168,7 +3528,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
     __pyx_r = ((PyObject *)__pyx_v_clTensor);
     goto __pyx_L0;
 
-    /* "PyClTorch.pyx":141
+    /* "PyClTorch.pyx":154
  *     cdef ClTensor clTensor
  *     cdef int nElement = floatTensor.nElement()
  *     if nElement > 0:             # <<<<<<<<<<<<<<
@@ -3177,7 +3537,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
  */
   }
 
-  /* "PyClTorch.pyx":155
+  /* "PyClTorch.pyx":168
  *         return clTensor
  *     else:
  *         return ClTensor()             # <<<<<<<<<<<<<<
@@ -3186,14 +3546,14 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 168; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_r = __pyx_t_7;
     __pyx_t_7 = 0;
     goto __pyx_L0;
   }
 
-  /* "PyClTorch.pyx":137
+  /* "PyClTorch.pyx":150
  *     return tensor
  * 
  * def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):             # <<<<<<<<<<<<<<
@@ -3218,7 +3578,7 @@ static PyObject *__pyx_pf_9PyClTorch_4FloatTensorToClTensor(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "PyClTorch.pyx":172
+/* "PyClTorch.pyx":185
  * cdef ClGlobalState clGlobalState
  * 
  * def init():             # <<<<<<<<<<<<<<
@@ -3249,18 +3609,18 @@ static PyObject *__pyx_pf_9PyClTorch_6init(CYTHON_UNUSED PyObject *__pyx_self) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("init", 0);
 
-  /* "PyClTorch.pyx":175
+  /* "PyClTorch.pyx":188
  *     global clGlobalState
  *     cdef THClState *state2
  *     print('initializing PyClTorch...')             # <<<<<<<<<<<<<<
  *     require(globalState.L, 'cltorch')
  *     require(globalState.L, 'clnn')
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":176
+  /* "PyClTorch.pyx":189
  *     cdef THClState *state2
  *     print('initializing PyClTorch...')
  *     require(globalState.L, 'cltorch')             # <<<<<<<<<<<<<<
@@ -3269,7 +3629,7 @@ static PyObject *__pyx_pf_9PyClTorch_6init(CYTHON_UNUSED PyObject *__pyx_self) {
  */
   require(__pyx_v_9PyClTorch_globalState->L, __pyx_k_cltorch);
 
-  /* "PyClTorch.pyx":177
+  /* "PyClTorch.pyx":190
  *     print('initializing PyClTorch...')
  *     require(globalState.L, 'cltorch')
  *     require(globalState.L, 'clnn')             # <<<<<<<<<<<<<<
@@ -3278,21 +3638,21 @@ static PyObject *__pyx_pf_9PyClTorch_6init(CYTHON_UNUSED PyObject *__pyx_self) {
  */
   require(__pyx_v_9PyClTorch_globalState->L, __pyx_k_clnn);
 
-  /* "PyClTorch.pyx":178
+  /* "PyClTorch.pyx":191
  *     require(globalState.L, 'cltorch')
  *     require(globalState.L, 'clnn')
  *     clGlobalState = ClGlobalState()             # <<<<<<<<<<<<<<
  *     clGlobalState.state = getState(globalState.L)
  *     print(' ... PyClTorch initialized')
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClGlobalState), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 178; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClGlobalState), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_9PyClTorch_clGlobalState));
   __Pyx_DECREF_SET(__pyx_v_9PyClTorch_clGlobalState, ((struct __pyx_obj_9PyClTorch_ClGlobalState *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":179
+  /* "PyClTorch.pyx":192
  *     require(globalState.L, 'clnn')
  *     clGlobalState = ClGlobalState()
  *     clGlobalState.state = getState(globalState.L)             # <<<<<<<<<<<<<<
@@ -3301,18 +3661,18 @@ static PyObject *__pyx_pf_9PyClTorch_6init(CYTHON_UNUSED PyObject *__pyx_self) {
  */
   __pyx_v_9PyClTorch_clGlobalState->state = getState(__pyx_v_9PyClTorch_globalState->L);
 
-  /* "PyClTorch.pyx":180
+  /* "PyClTorch.pyx":193
  *     clGlobalState = ClGlobalState()
  *     clGlobalState.state = getState(globalState.L)
  *     print(' ... PyClTorch initialized')             # <<<<<<<<<<<<<<
  * 
  * init()
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 180; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":172
+  /* "PyClTorch.pyx":185
  * cdef ClGlobalState clGlobalState
  * 
  * def init():             # <<<<<<<<<<<<<<
@@ -4025,6 +4385,8 @@ static PyMethodDef __pyx_methods_9PyClTorch_ClTensor[] = {
   {"size", (PyCFunction)__pyx_pw_9PyClTorch_8ClTensor_15size, METH_NOARGS, 0},
   {"nElement", (PyCFunction)__pyx_pw_9PyClTorch_8ClTensor_17nElement, METH_NOARGS, 0},
   {"sum", (PyCFunction)__pyx_pw_9PyClTorch_8ClTensor_19sum, METH_NOARGS, 0},
+  {"resizeAs", (PyCFunction)__pyx_pw_9PyClTorch_8ClTensor_23resizeAs, METH_O, 0},
+  {"uniform", (PyCFunction)__pyx_pw_9PyClTorch_8ClTensor_25uniform, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -4258,8 +4620,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_PyClTorch, __pyx_k_PyClTorch, sizeof(__pyx_k_PyClTorch), 0, 0, 1, 1},
   {&__pyx_kp_s_PyClTorch_initialized, __pyx_k_PyClTorch_initialized, sizeof(__pyx_k_PyClTorch_initialized), 0, 0, 1, 0},
   {&__pyx_n_s_PyTorch, __pyx_k_PyTorch, sizeof(__pyx_k_PyTorch), 0, 0, 1, 1},
+  {&__pyx_n_s_a, __pyx_k_a, sizeof(__pyx_k_a), 0, 0, 1, 1},
   {&__pyx_n_s_allocate, __pyx_k_allocate, sizeof(__pyx_k_allocate), 0, 0, 1, 1},
   {&__pyx_n_s_array, __pyx_k_array, sizeof(__pyx_k_array), 0, 0, 1, 1},
+  {&__pyx_n_s_b, __pyx_k_b, sizeof(__pyx_k_b), 0, 0, 1, 1},
   {&__pyx_kp_s_cannot_provide_arguments_to_init, __pyx_k_cannot_provide_arguments_to_init, sizeof(__pyx_k_cannot_provide_arguments_to_init), 0, 0, 1, 0},
   {&__pyx_n_s_clTensor, __pyx_k_clTensor, sizeof(__pyx_k_clTensor), 0, 0, 1, 1},
   {&__pyx_n_s_copy, __pyx_k_copy, sizeof(__pyx_k_copy), 0, 0, 1, 1},
@@ -4290,13 +4654,14 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_tensor, __pyx_k_tensor, sizeof(__pyx_k_tensor), 0, 0, 1, 1},
   {&__pyx_n_s_tensorC, __pyx_k_tensorC, sizeof(__pyx_k_tensorC), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_n_s_uniform, __pyx_k_uniform, sizeof(__pyx_k_uniform), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_staticmethod = __Pyx_GetBuiltinName(__pyx_n_s_staticmethod); if (!__pyx_builtin_staticmethod) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_Exception = __Pyx_GetBuiltinName(__pyx_n_s_Exception); if (!__pyx_builtin_Exception) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 64; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_staticmethod = __Pyx_GetBuiltinName(__pyx_n_s_staticmethod); if (!__pyx_builtin_staticmethod) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_Exception = __Pyx_GetBuiltinName(__pyx_n_s_Exception); if (!__pyx_builtin_Exception) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
   __pyx_L1_error:;
@@ -4307,117 +4672,117 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "PyClTorch.pyx":64
+  /* "PyClTorch.pyx":65
  *             for arg in args:
  *                 if not isinstance(arg, int):
  *                     raise Exception('cannot provide arguments to initializer')             # <<<<<<<<<<<<<<
  *             if len(args) == 0:
  *                 self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_cannot_provide_arguments_to_init); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 64; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_cannot_provide_arguments_to_init); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "PyClTorch.pyx":87
+  /* "PyClTorch.pyx":88
  *         cdef PyTorch._FloatTensor floatTensor = self.float()
  *         floatRepr = floatTensor.__repr__()
  *         clRepr = floatRepr.replace('FloatTensor', 'ClTensor')             # <<<<<<<<<<<<<<
  *         return clRepr
  * 
  */
-  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_n_s_FloatTensor, __pyx_n_s_ClTensor); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_n_s_FloatTensor, __pyx_n_s_ClTensor); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "PyClTorch.pyx":151
+  /* "PyClTorch.pyx":164
  *             clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]), int(size[3]))
  *         else:
  *             raise Exception('not implemented')             # <<<<<<<<<<<<<<
  *         clTensor.copy(floatTensor)
  *         return clTensor
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_not_implemented); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_not_implemented); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "PyClTorch.pyx":175
+  /* "PyClTorch.pyx":188
  *     global clGlobalState
  *     cdef THClState *state2
  *     print('initializing PyClTorch...')             # <<<<<<<<<<<<<<
  *     require(globalState.L, 'cltorch')
  *     require(globalState.L, 'clnn')
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_initializing_PyClTorch); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_initializing_PyClTorch); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "PyClTorch.pyx":180
+  /* "PyClTorch.pyx":193
  *     clGlobalState = ClGlobalState()
  *     clGlobalState.state = getState(globalState.L)
  *     print(' ... PyClTorch initialized')             # <<<<<<<<<<<<<<
  * 
  * init()
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_s_PyClTorch_initialized); if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 180; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_s_PyClTorch_initialized); if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "PyClTorch.pyx":46
+  /* "PyClTorch.pyx":47
  *     void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor)
  * 
  * def cyPopClTensor():             # <<<<<<<<<<<<<<
  *     cdef THClTensor *tensorC = popClTensor(globalState.L)
  *     cdef ClTensor tensor = ClTensor_fromNative(tensorC)
  */
-  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_n_s_tensorC, __pyx_n_s_tensor); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_n_s_tensorC, __pyx_n_s_tensor); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
-  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_cyPopClTensor, 46, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_cyPopClTensor, 47, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "PyClTorch.pyx":51
+  /* "PyClTorch.pyx":52
  *     return tensor
  * 
  * def cyPushClTensor(ClTensor tensor):             # <<<<<<<<<<<<<<
  *     pushClTensor(clGlobalState.state, globalState.L, tensor.native)
  * 
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_n_s_tensor); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_n_s_tensor); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_cyPushClTensor, 51, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_cyPushClTensor, 52, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "PyClTorch.pyx":79
+  /* "PyClTorch.pyx":80
  * 
  *     @staticmethod
  *     def new():             # <<<<<<<<<<<<<<
  *         return ClTensor()
  * #        cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  */
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_new, 79, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_new, 80, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "PyClTorch.pyx":137
+  /* "PyClTorch.pyx":150
  *     return tensor
  * 
  * def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):             # <<<<<<<<<<<<<<
  *     cdef PyTorch._FloatTensor size = floatTensor.size()
  *     cdef ClTensor clTensor
  */
-  __pyx_tuple__11 = PyTuple_Pack(4, __pyx_n_s_floatTensor, __pyx_n_s_size, __pyx_n_s_clTensor, __pyx_n_s_nElement); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__11 = PyTuple_Pack(4, __pyx_n_s_floatTensor, __pyx_n_s_size, __pyx_n_s_clTensor, __pyx_n_s_nElement); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_FloatTensorToClTensor, 137, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_FloatTensorToClTensor, 150, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "PyClTorch.pyx":172
+  /* "PyClTorch.pyx":185
  * cdef ClGlobalState clGlobalState
  * 
  * def init():             # <<<<<<<<<<<<<<
  *     global clGlobalState
  *     cdef THClState *state2
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_n_s_state2); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_n_s_state2); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(0, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_init, 172, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(0, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_data_norep_git_pycltorch_PyClTo, __pyx_n_s_init, 185, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4524,14 +4889,14 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
   /*--- Type init code ---*/
   __pyx_vtabptr_9PyClTorch_ClTensor = &__pyx_vtable_9PyClTorch_ClTensor;
   __pyx_vtable_9PyClTorch_ClTensor.dims = (int (*)(struct __pyx_obj_9PyClTorch_ClTensor *, int __pyx_skip_dispatch))__pyx_f_9PyClTorch_8ClTensor_dims;
-  if (PyType_Ready(&__pyx_type_9PyClTorch_ClTensor) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_9PyClTorch_ClTensor) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_9PyClTorch_ClTensor.tp_print = 0;
-  if (__Pyx_SetVtable(__pyx_type_9PyClTorch_ClTensor.tp_dict, __pyx_vtabptr_9PyClTorch_ClTensor) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyObject_SetAttrString(__pyx_m, "ClTensor", (PyObject *)&__pyx_type_9PyClTorch_ClTensor) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__Pyx_SetVtable(__pyx_type_9PyClTorch_ClTensor.tp_dict, __pyx_vtabptr_9PyClTorch_ClTensor) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "ClTensor", (PyObject *)&__pyx_type_9PyClTorch_ClTensor) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_9PyClTorch_ClTensor = &__pyx_type_9PyClTorch_ClTensor;
-  if (PyType_Ready(&__pyx_type_9PyClTorch_ClGlobalState) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_9PyClTorch_ClGlobalState) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_9PyClTorch_ClGlobalState.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "ClGlobalState", (PyObject *)&__pyx_type_9PyClTorch_ClGlobalState) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "ClGlobalState", (PyObject *)&__pyx_type_9PyClTorch_ClGlobalState) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_9PyClTorch_ClGlobalState = &__pyx_type_9PyClTorch_ClGlobalState;
   /*--- Type import code ---*/
   __pyx_ptype_7cpython_4type_type = __Pyx_ImportType(__Pyx_BUILTIN_MODULE_NAME, "type", 
@@ -4576,122 +4941,122 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_PyTorch, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":46
+  /* "PyClTorch.pyx":47
  *     void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor)
  * 
  * def cyPopClTensor():             # <<<<<<<<<<<<<<
  *     cdef THClTensor *tensorC = popClTensor(globalState.L)
  *     cdef ClTensor tensor = ClTensor_fromNative(tensorC)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_1cyPopClTensor, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_1cyPopClTensor, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_cyPopClTensor, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_cyPopClTensor, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":51
+  /* "PyClTorch.pyx":52
  *     return tensor
  * 
  * def cyPushClTensor(ClTensor tensor):             # <<<<<<<<<<<<<<
  *     pushClTensor(clGlobalState.state, globalState.L, tensor.native)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_3cyPushClTensor, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_3cyPushClTensor, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_cyPushClTensor, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_cyPushClTensor, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":79
+  /* "PyClTorch.pyx":80
  * 
  *     @staticmethod
  *     def new():             # <<<<<<<<<<<<<<
  *         return ClTensor()
  * #        cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_8ClTensor_5new, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_8ClTensor_5new, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "PyClTorch.pyx":78
+  /* "PyClTorch.pyx":79
  *         THClTensor_free(clGlobalState.state, self.native)
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def new():
  *         return ClTensor()
  */
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_staticmethod, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_staticmethod, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_9PyClTorch_ClTensor->tp_dict, __pyx_n_s_new, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_9PyClTorch_ClTensor->tp_dict, __pyx_n_s_new, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   PyType_Modified(__pyx_ptype_9PyClTorch_ClTensor);
 
-  /* "PyClTorch.pyx":79
+  /* "PyClTorch.pyx":80
  * 
  *     @staticmethod
  *     def new():             # <<<<<<<<<<<<<<
  *         return ClTensor()
  * #        cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
  */
-  __pyx_t_1 = __Pyx_GetNameInClass((PyObject *)__pyx_ptype_9PyClTorch_ClTensor, __pyx_n_s_new); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetNameInClass((PyObject *)__pyx_ptype_9PyClTorch_ClTensor, __pyx_n_s_new); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "PyClTorch.pyx":78
+  /* "PyClTorch.pyx":79
  *         THClTensor_free(clGlobalState.state, self.native)
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def new():
  *         return ClTensor()
  */
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_staticmethod, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_staticmethod, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_9PyClTorch_ClTensor->tp_dict, __pyx_n_s_new, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_9PyClTorch_ClTensor->tp_dict, __pyx_n_s_new, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   PyType_Modified(__pyx_ptype_9PyClTorch_ClTensor);
 
-  /* "PyClTorch.pyx":137
+  /* "PyClTorch.pyx":150
  *     return tensor
  * 
  * def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):             # <<<<<<<<<<<<<<
  *     cdef PyTorch._FloatTensor size = floatTensor.size()
  *     cdef ClTensor clTensor
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_5FloatTensorToClTensor, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_5FloatTensorToClTensor, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_FloatTensorToClTensor, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_FloatTensorToClTensor, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":157
+  /* "PyClTorch.pyx":170
  *         return ClTensor()
  * 
  * import floattensor_patch             # <<<<<<<<<<<<<<
  * 
  * cdef PyTorch.GlobalState globalState = PyTorch.getGlobalState()
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_floattensor_patch, 0, -1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_floattensor_patch, 0, -1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 170; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_floattensor_patch, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_floattensor_patch, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 170; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":159
+  /* "PyClTorch.pyx":172
  * import floattensor_patch
  * 
  * cdef PyTorch.GlobalState globalState = PyTorch.getGlobalState()             # <<<<<<<<<<<<<<
  * 
  * cdef class ClGlobalState(object):
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyTorch); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyTorch); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_getGlobalState); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_getGlobalState); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -4705,38 +5070,38 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
     }
   }
   if (__pyx_t_2) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch_GlobalState))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_7PyTorch_GlobalState))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_XGOTREF(((PyObject *)__pyx_v_9PyClTorch_globalState));
   __Pyx_DECREF_SET(__pyx_v_9PyClTorch_globalState, ((struct __pyx_obj_7PyTorch_GlobalState *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":172
+  /* "PyClTorch.pyx":185
  * cdef ClGlobalState clGlobalState
  * 
  * def init():             # <<<<<<<<<<<<<<
  *     global clGlobalState
  *     cdef THClState *state2
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_7init, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9PyClTorch_7init, NULL, __pyx_n_s_PyClTorch); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_init, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_init, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "PyClTorch.pyx":182
+  /* "PyClTorch.pyx":195
  *     print(' ... PyClTorch initialized')
  * 
  * init()             # <<<<<<<<<<<<<<
  * 
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_init); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_init); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4749,10 +5114,10 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
     }
   }
   if (__pyx_t_2) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;

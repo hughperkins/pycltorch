@@ -18,6 +18,7 @@ virtualenv env
 source env/bin/activate
 pip install cython
 pip install numpy
+pip install Jinja2
 ```
 * *You need to have pytorch repo next to pycltorch repository*, ie the parent folder of pycltorch should contain [pytorch](https://github.com/hughperkins/pytorch)
 

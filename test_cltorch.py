@@ -24,6 +24,8 @@ print('a', a)
 
 print('sum:', a.sum())
 myeval('a + 1')
+b = PyClTorch.ClTensor().resizeAs(a).uniform()
+myeval('b')
 
 b = PyClTorch.ClTensor()
 print('b.dims()', b.dims())

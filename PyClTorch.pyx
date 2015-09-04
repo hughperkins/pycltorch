@@ -29,6 +29,7 @@ cdef extern from "THClTensor.h":
     int THClTensor_nDimension(THClState *state, THClTensor *tensor)
     long THClTensor_size(THClState *state, const THClTensor *self, int dim)
     long THClTensor_nElement(THClState *state, const THClTensor *self)
+    void THClTensor_resizeAs(THClState *state, THClTensor *self, THClTensor *model)
 
 cdef extern from "THClTensorCopy.h":
     void THClTensor_copyFloat(THClState *state, THClTensor *self, THFloatTensor *src)
@@ -126,6 +127,18 @@ cdef class ClTensor(object):
         cdef ClTensor res = ClTensor()
         THClTensor_add(clGlobalState.state, res.native, self.native, scalar)
         return res
+
+    def resizeAs(ClTensor self, ClTensor model):
+        THClTensor_resizeAs(clGlobalState.state, self.native, model.native)
+        return self
+
+    def uniform(ClTensor self, float a=0, float b=1):
+        size = self.size()
+        print('size', size)
+        floatTensor = PyTorch._FloatTensor(size)
+        floatTensor.uniform(a, b)
+        self.copy(floatTensor)
+        return self
 
 cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
     cdef ClTensor tensor = ClTensor(_allocate=False )
