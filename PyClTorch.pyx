@@ -87,14 +87,12 @@ cdef class ClTensor(object):
         return clRepr
 
     def float(ClTensor self):
-        print('ClTensor.float()')
         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
         cdef PyTorch._FloatTensor size = self.size()
         if size is None:
             return PyTorch._FloatTensor()
         if size.dims() == 0:
             return PyTorch._FloatTensor()
-        print('size', size)
         floatTensor.resize(size)
         THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
         return floatTensor
@@ -109,7 +107,6 @@ cdef class ClTensor(object):
     def size(ClTensor self):
         cdef int dims = self.dims()
         cdef PyTorch._FloatTensor size
-        print('ClTensor.size() dims=', dims)
         if dims >= 0:
             size = PyTorch._FloatTensor(dims)
             for d in range(dims):
@@ -132,7 +129,6 @@ cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
     return tensor
 
 def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
-    print('\nFloatTensorToClTensor()')
     cdef PyTorch._FloatTensor size = floatTensor.size()
     cdef ClTensor clTensor
     cdef int nElement = floatTensor.nElement()
