@@ -90,7 +90,7 @@ cdef class ClTensor(object):
 
     def float(ClTensor self):
         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
-        cdef PyTorch._FloatTensor size = self.size()
+        cdef PyTorch._LongTensor size = self.size()
         if size is None:
             return PyTorch._FloatTensor()
         if size.dims() == 0:
@@ -108,9 +108,10 @@ cdef class ClTensor(object):
 
     def size(ClTensor self):
         cdef int dims = self.dims()
-        cdef PyTorch._FloatTensor size
+        cdef PyTorch._LongTensor size
+        print('cltensor.size long versoin')
         if dims >= 0:
-            size = PyTorch._FloatTensor(dims)
+            size = PyTorch._LongTensor(dims)
             for d in range(dims):
                 size.set1d(d, THClTensor_size(clGlobalState.state, self.native, d))
             return size
@@ -136,6 +137,8 @@ cdef class ClTensor(object):
         size = self.size()
         print('size', size)
         floatTensor = PyTorch._FloatTensor(size)
+        print('got floattensor')
+        print('uniform, floatTensor=', floatTensor)
         floatTensor.uniform(a, b)
         self.copy(floatTensor)
         return self
@@ -148,7 +151,7 @@ cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
     return tensor
 
 def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
-    cdef PyTorch._FloatTensor size = floatTensor.size()
+    cdef PyTorch._LongTensor size = floatTensor.size()
     cdef ClTensor clTensor
     cdef int nElement = floatTensor.nElement()
     if nElement > 0:
