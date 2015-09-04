@@ -76,12 +76,16 @@ cdef class ClTensor(object):
         cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
         return ClTensor_fromNative(newTensorC, False)
 
-#    def __repr__(ClTensor self):
-#        cdef _FloatTensor = _FloatTensor.copy
+    def __repr__(ClTensor self):
+        cdef PyTorch._FloatTensor floatTensor = self.float()
+        floatRepr = floatTensor.__repr__()
+        clRepr = floatRepr.replace('FloatTensor', 'ClTensor')
+        return clRepr
 
     def float(ClTensor self):
         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
         cdef PyTorch._FloatTensor size = self.size()
+        print('size', size)
         floatTensor.resize(size)
         THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
         return floatTensor
@@ -96,7 +100,7 @@ cdef class ClTensor(object):
     def size(ClTensor self):
         cdef int dims = self.dims()
         cdef PyTorch._FloatTensor size
-        if dims > 0:
+        if dims >= 0:
             size = PyTorch._FloatTensor(dims)
             for d in range(dims):
                 size.set1d(d, THClTensor_size(clGlobalState.state, self.native, d))
