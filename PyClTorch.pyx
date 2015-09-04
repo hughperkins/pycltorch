@@ -36,6 +36,7 @@ cdef extern from "THClTensorCopy.h":
 
 cdef extern from "THClTensorMath.h":
     float THClTensor_sumall(THClState *state, THClTensor *self)
+    void THClTensor_add(THClState *state, THClTensor *res, THClTensor *self, float scalar)
 
 cdef extern from "clnnWrapper.h":
     THClState *getState(lua_State *L)
@@ -120,6 +121,11 @@ cdef class ClTensor(object):
 
     def sum(ClTensor self):
         return THClTensor_sumall(clGlobalState.state, self.native)
+
+    def __add__(ClTensor self, float scalar):
+        cdef ClTensor res = ClTensor()
+        THClTensor_add(clGlobalState.state, res.native, self.native, scalar)
+        return res
 
 cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
     cdef ClTensor tensor = ClTensor(_allocate=False )
