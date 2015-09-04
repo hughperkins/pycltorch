@@ -28,6 +28,7 @@ cdef extern from "THClTensor.h":
     void THClTensor_free(THClState *state, THClTensor *tensor)
     int THClTensor_nDimension(THClState *state, THClTensor *tensor)
     long THClTensor_size(THClState *state, const THClTensor *self, int dim)
+    long THClTensor_nElement(THClState *state, const THClTensor *self)
 
 cdef extern from "THClTensorCopy.h":
     void THClTensor_copyFloat(THClState *state, THClTensor *self, THFloatTensor *src)
@@ -54,13 +55,15 @@ cimport PyTorch
 cdef class ClTensor(object):
     cdef THClTensor *native
 
-    def __cinit__(ClTensor self, *args):
+    def __cinit__(ClTensor self, *args, _allocate=True):
 #        print('ClTensor.__cinit__')
-        if len(args) > 0:
+        if _allocate:
             for arg in args:
                 if not isinstance(arg, int):
                     raise Exception('cannot provide arguments to initializer')
-            if len(args) == 1:
+            if len(args) == 0:
+                self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
+            elif len(args) == 1:
                 self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state
             elif len(args) == 2:
                 self.native = THClTensor_newWithSize2d(clGlobalState.state, 0, args[0], args[1])  # FIXME get device from state
@@ -73,8 +76,9 @@ cdef class ClTensor(object):
 
     @staticmethod
     def new():
-        cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
-        return ClTensor_fromNative(newTensorC, False)
+        return ClTensor()
+#        cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
+#        return ClTensor_fromNative(newTensorC, False)
 
     def __repr__(ClTensor self):
         cdef PyTorch._FloatTensor floatTensor = self.float()
@@ -83,8 +87,13 @@ cdef class ClTensor(object):
         return clRepr
 
     def float(ClTensor self):
+        print('ClTensor.float()')
         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
         cdef PyTorch._FloatTensor size = self.size()
+        if size is None:
+            return PyTorch._FloatTensor()
+        if size.dims() == 0:
+            return PyTorch._FloatTensor()
         print('size', size)
         floatTensor.resize(size)
         THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
@@ -100,6 +109,7 @@ cdef class ClTensor(object):
     def size(ClTensor self):
         cdef int dims = self.dims()
         cdef PyTorch._FloatTensor size
+        print('ClTensor.size() dims=', dims)
         if dims >= 0:
             size = PyTorch._FloatTensor(dims)
             for d in range(dims):
@@ -108,31 +118,39 @@ cdef class ClTensor(object):
         else:
             return None  # not sure how to handle this yet
 
+    def nElement(ClTensor self):
+        return THClTensor_nElement(clGlobalState.state, self.native)
+
     def sum(ClTensor self):
         return THClTensor_sumall(clGlobalState.state, self.native)
 
 cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
-    cdef ClTensor tensor = ClTensor()
+    cdef ClTensor tensor = ClTensor(_allocate=False )
     tensor.native = tensorC
     if retain:
         THClTensor_retain(clGlobalState.state, tensorC)
     return tensor
 
 def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
+    print('\nFloatTensorToClTensor()')
     cdef PyTorch._FloatTensor size = floatTensor.size()
     cdef ClTensor clTensor
-    if floatTensor.dims() == 1:
-        clTensor = ClTensor(int(size[0]))
-    elif floatTensor.dims() == 2:
-        clTensor = ClTensor(int(size[0]), int(size[1]))
-    elif floatTensor.dims() == 3:
-        clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]))
-    elif floatTensor.dims() == 4:
-        clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]), int(size[3]))
+    cdef int nElement = floatTensor.nElement()
+    if nElement > 0:
+        if floatTensor.dims() == 1:
+            clTensor = ClTensor(int(size[0]))
+        elif floatTensor.dims() == 2:
+            clTensor = ClTensor(int(size[0]), int(size[1]))
+        elif floatTensor.dims() == 3:
+            clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]))
+        elif floatTensor.dims() == 4:
+            clTensor = ClTensor(int(size[0]), int(size[1]), int(size[2]), int(size[3]))
+        else:
+            raise Exception('not implemented')
+        clTensor.copy(floatTensor)
+        return clTensor
     else:
-        raise Exception('not implemented')
-    clTensor.copy(floatTensor)
-    return clTensor
+        return ClTensor()
 
 import floattensor_patch
 
