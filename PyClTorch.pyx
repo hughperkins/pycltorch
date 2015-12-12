@@ -109,7 +109,7 @@ cdef class ClTensor(object):
     def size(ClTensor self):
         cdef int dims = self.dims()
         cdef Storage._LongStorage size
-        print('cltensor.size long versoin')
+#        print('cltensor.size long versoin')
         if dims >= 0:
             size = Storage._LongStorage(dims)
             for d in range(dims):
@@ -136,10 +136,10 @@ cdef class ClTensor(object):
     def uniform(ClTensor self, float a=0, float b=1):
         cdef Storage._LongStorage size = self.size()
         cdef PyTorch._FloatTensor floatTensor
-        print('size', size)
+#        print('size', size)
         floatTensor = PyTorch._FloatTensor(size)
-        print('got floattensor')
-        print('uniform, floatTensor=', floatTensor)
+#        print('got floattensor')
+#        print('uniform, floatTensor=', floatTensor)
         floatTensor.uniform(a, b)
         self.copy(floatTensor)
         return self
