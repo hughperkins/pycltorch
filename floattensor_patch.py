@@ -7,9 +7,9 @@ import PyTorchAug
 #from PyTorchAug import *
 
 def cl(self):
-    print('cl')
+#    print('cl')
     res = PyClTorch.FloatTensorToClTensor(self)
-    print('res', res)
+#    print('res', res)
     return res
 
 FloatTensor.cl = cl

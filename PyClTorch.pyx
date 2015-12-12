@@ -26,12 +26,15 @@ cdef extern from "THClTensor.h":
     THClTensor *THClTensor_newv2(THClState *state, int device)
     THClTensor *THClTensor_newWithSize1d(THClState *state, int device, long size0)
     THClTensor *THClTensor_newWithSize2d(THClState *state, int device, long size0, long size1)
+    THClTensor *THClTensor_newWithSize3d(THClState *state, int device, long size0, long size1, long size2)
+    THClTensor *THClTensor_newWithSize4d(THClState *state, int device, long size0, long size1, long size2, long size3)
     void THClTensor_retain(THClState *state, THClTensor*self)
     void THClTensor_free(THClState *state, THClTensor *tensor)
     int THClTensor_nDimension(THClState *state, THClTensor *tensor)
     long THClTensor_size(THClState *state, const THClTensor *self, int dim)
     long THClTensor_nElement(THClState *state, const THClTensor *self)
     void THClTensor_resizeAs(THClState *state, THClTensor *self, THClTensor *model)
+    THClTensor *THClTensor_newSelect(THClState *state, THClTensor *self, int dimension, int sliceIndex)
 
 cdef extern from "THClTensorCopy.h":
     void THClTensor_copyFloat(THClState *state, THClTensor *self, THFloatTensor *src)
@@ -69,6 +72,10 @@ cdef class ClTensor(object):
                 self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state
             elif len(args) == 2:
                 self.native = THClTensor_newWithSize2d(clGlobalState.state, 0, args[0], args[1])  # FIXME get device from state
+            elif len(args) == 3:
+                self.native = THClTensor_newWithSize3d(clGlobalState.state, 0, args[0], args[1], args[2])  # FIXME get device from state
+            elif len(args) == 4:
+                self.native = THClTensor_newWithSize4d(clGlobalState.state, 0, args[0], args[1], args[2], args[3])  # FIXME get device from state
             else:
                 raise Exception('Not implemented, len(args)=' + str(len(args)))
 
@@ -128,6 +135,12 @@ cdef class ClTensor(object):
         cdef ClTensor res = ClTensor()
         THClTensor_add(clGlobalState.state, res.native, self.native, scalar)
         return res
+
+    def __getitem__(ClTensor self, int index):
+        if self.dims() == 1:
+            return self.get1d(index)
+        cdef THClTensor *res = THClTensor_newSelect(clGlobalState.state, self.native, 0, index)
+        return ClTensor_fromNative(res, False)
 
     def resizeAs(ClTensor self, ClTensor model):
         THClTensor_resizeAs(clGlobalState.state, self.native, model.native)

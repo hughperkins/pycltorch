@@ -71,5 +71,25 @@ print('outputFloat', outputFloat)
 
 print('output', output)
 
+mlp = Sequential()
+mlp.add(SpatialConvolutionMM(1,16,5,5,1,1,2,2))
+mlp.add(ReLU())
+mlp.add(SpatialMaxPooling(3,3,3,3))
+mlp.add(SpatialConvolutionMM(16,32,5,5,1,1,2,2))
+mlp.add(ReLU())
+mlp.add(SpatialMaxPooling(2,2,2,2))
+mlp.add(Reshape(32*4*4))
+mlp.add(Linear(32*4*4, 150))
+mlp.add(Tanh())
+mlp.add(Linear(150, 10))
+mlp.add(LogSoftMax())
 
+mlp.cl()
+
+print('mlp', mlp)
+myeval('mlp.output')
+input = PyTorch.FloatTensor(128,1,28,28).uniform().cl()
+myeval('input[0]')
+output = mlp.forward(input)
+myeval('output[0]')
 
