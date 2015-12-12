@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-from floattensor import FloatTensor
+from floattensor import FloatTensor, LongStorage
 
 import PyClTorch
 import PyTorchAug

@@ -67,7 +67,7 @@ ext_modules = [
                   home_dir + '/torch/install/include/TH',
                   home_dir + '/torch/install/include/THCl',
                   '/usr/include/lua5.1',
-                  '../pytorch'],
+                  '../pytorch/src'],
               library_dirs=library_dirs,
               libraries=libraries,
               extra_compile_args=compile_options,

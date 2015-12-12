@@ -7,6 +7,8 @@ cimport cpython.array
 import array
 
 import PyTorch
+cimport PyTorch
+cimport Storage
 
 cdef extern from "LuaHelper.h":
     cdef struct lua_State
@@ -52,8 +54,6 @@ def cyPopClTensor():
 def cyPushClTensor(ClTensor tensor):
     pushClTensor(clGlobalState.state, globalState.L, tensor.native)
 
-cimport PyTorch
-
 cdef class ClTensor(object):
     cdef THClTensor *native
 
@@ -90,17 +90,17 @@ cdef class ClTensor(object):
 
     def float(ClTensor self):
         cdef PyTorch._FloatTensor floatTensor = PyTorch._FloatTensor.new()
-        cdef PyTorch._LongTensor size = self.size()
+        cdef Storage._LongStorage size = self.size()
         if size is None:
             return PyTorch._FloatTensor()
-        if size.dims() == 0:
+        if len(size) == 0:
             return PyTorch._FloatTensor()
         floatTensor.resize(size)
-        THFloatTensor_copyCl(clGlobalState.state, floatTensor.thFloatTensor, self.native)
+        THFloatTensor_copyCl(clGlobalState.state, floatTensor.native, self.native)
         return floatTensor
 
     def copy(ClTensor self, PyTorch._FloatTensor src):
-        THClTensor_copyFloat(clGlobalState.state, self.native, src.thFloatTensor)
+        THClTensor_copyFloat(clGlobalState.state, self.native, src.native)
         return self
 
     cpdef int dims(ClTensor self):
@@ -108,12 +108,12 @@ cdef class ClTensor(object):
 
     def size(ClTensor self):
         cdef int dims = self.dims()
-        cdef PyTorch._LongTensor size
+        cdef Storage._LongStorage size
         print('cltensor.size long versoin')
         if dims >= 0:
-            size = PyTorch._LongTensor(dims)
+            size = Storage._LongStorage(dims)
             for d in range(dims):
-                size.set1d(d, THClTensor_size(clGlobalState.state, self.native, d))
+                size[d] = THClTensor_size(clGlobalState.state, self.native, d)
             return size
         else:
             return None  # not sure how to handle this yet
@@ -134,7 +134,8 @@ cdef class ClTensor(object):
         return self
 
     def uniform(ClTensor self, float a=0, float b=1):
-        size = self.size()
+        cdef Storage._LongStorage size = self.size()
+        cdef PyTorch._FloatTensor floatTensor
         print('size', size)
         floatTensor = PyTorch._FloatTensor(size)
         print('got floattensor')
@@ -151,7 +152,7 @@ cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
     return tensor
 
 def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
-    cdef PyTorch._LongTensor size = floatTensor.size()
+    cdef Storage._LongStorage size = floatTensor.size()
     cdef ClTensor clTensor
     cdef int nElement = floatTensor.nElement()
     if nElement > 0:
