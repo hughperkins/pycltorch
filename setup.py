@@ -11,12 +11,11 @@ import sys
 import platform
 from setuptools import setup
 from setuptools import Extension
+from Cython.Build import cythonize
 
 home_dir = os.getenv('HOME')
 print('home_dir:', home_dir)
 
-cython_present = False
-from Cython.Build import cythonize
 cython_present = True
 
 building_dist = False
@@ -40,12 +39,12 @@ else:
 
 runtime_library_dirs = []
 libraries = []
-#libraries.append('mylib')
-#libraries.append('clnnWrapper')
+# libraries.append('mylib')
+# libraries.append('clnnWrapper')
 libraries.append('TH')
 libraries.append('THCl')
 libraries.append('PyTorchNative')
-#libraries.append('PyTorch')
+# libraries.append('PyTorch')
 library_dirs = []
 library_dirs.append('cbuild')
 library_dirs.append(home_dir + '/torch/install/lib')
@@ -73,17 +72,17 @@ ext_modules = [
               extra_compile_args=compile_options,
               runtime_library_dirs=runtime_library_dirs,
               language="c++"),
-#    Extension("GlobalState",
-#              sources=['GlobalState.pyx'],
-#              include_dirs=[
-#                  home_dir + '/torch/install/include/TH',
-#                  home_dir + '/torch/install/include/THCl',
-#                  '../pytorch'],
-#              library_dirs=library_dirs,
-#              libraries=libraries,
-#              extra_compile_args=compile_options,
-#              runtime_library_dirs=runtime_library_dirs,
-#              language="c++"),
+    #    Extension("GlobalState",
+    #              sources=['GlobalState.pyx'],
+    #              include_dirs=[
+    #                  home_dir + '/torch/install/include/TH',
+    #                  home_dir + '/torch/install/include/THCl',
+    #                  '../pytorch'],
+    #              library_dirs=library_dirs,
+    #              libraries=libraries,
+    #              extra_compile_args=compile_options,
+    #              runtime_library_dirs=runtime_library_dirs,
+    #              language="c++"),
 ]
 
 ext_modules = cythonize(ext_modules)
@@ -104,4 +103,3 @@ setup(
     scripts=[],
     ext_modules=ext_modules,
 )
-
