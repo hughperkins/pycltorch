@@ -44,7 +44,7 @@ libraries = []
 #libraries.append('clnnWrapper')
 libraries.append('TH')
 libraries.append('THCl')
-libraries.append('TorchLanguageIndependence')
+libraries.append('PyTorchNative')
 #libraries.append('PyTorch')
 library_dirs = []
 library_dirs.append('cbuild')

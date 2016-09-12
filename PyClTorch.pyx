@@ -13,7 +13,7 @@ cimport Storage
 cdef extern from "LuaHelper.h":
     cdef struct lua_State
     void *getGlobal(lua_State *L, const char *name1, const char *name2);
-    void require(lua_State *L, const char *name)
+    void luaRequire(lua_State *L, const char *name)
 
 cdef extern from "THClGeneral.h":
     cdef struct THClState
@@ -203,8 +203,8 @@ def init():
     global clGlobalState
     cdef THClState *state2
     print('initializing PyClTorch...')
-    require(globalState.L, 'cltorch')
-    require(globalState.L, 'clnn')
+    luaRequire(globalState.L, 'cltorch')
+    luaRequire(globalState.L, 'clnn')
     clGlobalState = ClGlobalState()
     clGlobalState.state = getState(globalState.L)
     print(' ... PyClTorch initialized')

@@ -12,14 +12,16 @@
 # NOGIT=1  => doesnt pull from git into pytorch
 
 if [[ x${NOPYTORCHBUILD} == x ]]; then {
-    cd ../pytorch
-    if [[ x${NOGIT}} == x ]]; then {
-        git checkout master
-        git pull
-    } fi
-    pip uninstall -y PyTorch
-    ./build.sh || exit 1
-    python setup.py install || exit 1
+    (
+        cd ../pytorch
+        if [[ x${NOGIT}} == x ]]; then {
+            git checkout master
+            git pull
+        } fi
+        pip uninstall -y PyTorch
+        ./build.sh || exit 1
+        python setup.py install || exit 1
+    )
 } fi
 rm -Rf build cbuild dist *.so *.pyc PyCltorch.cpp
 #mkdir cbuild

@@ -1,5 +1,6 @@
 from __future__ import print_function
 import PyClTorch
+from PyTorchAug import nn
 
 #PyClTorch.newfunction(123)
 
@@ -45,7 +46,7 @@ print('c.size()', c.size())
 print('c', c)
 
 print('creating Linear...')
-linear = Linear(3,5)
+linear = nn.Linear(3,5)
 print('created linear')
 print('linear:', linear)
 myeval('linear.output')
@@ -71,18 +72,18 @@ print('outputFloat', outputFloat)
 
 print('output', output)
 
-mlp = Sequential()
-mlp.add(SpatialConvolutionMM(1,16,5,5,1,1,2,2))
-mlp.add(ReLU())
-mlp.add(SpatialMaxPooling(3,3,3,3))
-mlp.add(SpatialConvolutionMM(16,32,5,5,1,1,2,2))
-mlp.add(ReLU())
-mlp.add(SpatialMaxPooling(2,2,2,2))
-mlp.add(Reshape(32*4*4))
-mlp.add(Linear(32*4*4, 150))
-mlp.add(Tanh())
-mlp.add(Linear(150, 10))
-mlp.add(LogSoftMax())
+mlp = nn.Sequential()
+mlp.add(nn.SpatialConvolutionMM(1,16,5,5,1,1,2,2))
+mlp.add(nn.ReLU())
+mlp.add(nn.SpatialMaxPooling(3,3,3,3))
+mlp.add(nn.SpatialConvolutionMM(16,32,5,5,1,1,2,2))
+mlp.add(nn.ReLU())
+mlp.add(nn.SpatialMaxPooling(2,2,2,2))
+mlp.add(nn.Reshape(32*4*4))
+mlp.add(nn.Linear(32*4*4, 150))
+mlp.add(nn.Tanh())
+mlp.add(nn.Linear(150, 10))
+mlp.add(nn.LogSoftMax())
 
 mlp.cl()
 
