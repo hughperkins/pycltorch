@@ -18,12 +18,6 @@ print('home_dir:', home_dir)
 
 cython_present = True
 
-building_dist = False
-for arg in sys.argv:
-    if arg in ('sdist', 'bdist', 'bdist_egg', 'build_ext'):
-        building_dist = True
-        break
-
 compile_options = []
 osfamily = platform.uname()[0]
 if osfamily == 'Windows':
@@ -89,7 +83,7 @@ ext_modules = cythonize(ext_modules)
 
 setup(
     name='PyClTorch',
-    version='',
+    version='SNAPSHOT',
     author="Hugh Perkins",
     author_email="hughperkins@gmail.com",
     description=(

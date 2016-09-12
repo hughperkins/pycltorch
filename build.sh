@@ -26,5 +26,5 @@ if [[ x${NOPYTORCHBUILD} == x ]]; then {
 rm -Rf build cbuild dist *.so *.pyc PyCltorch.cpp
 #mkdir cbuild
 #(cd cbuild; cmake .. && make -j 4 ) || exit 1
-python setup.py build_ext -i || exit 1
-
+# python setup.py build_ext -i || exit 1
+pip install -e ./
