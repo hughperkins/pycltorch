@@ -4,7 +4,7 @@
 
 BASE=$(PWD)
 for pkg in cudnn cunn cunnx cutorch qttorch graph sdl2 threads submodule graphicsmagick audio dok argcheck fftw3 signal nnx qtlua gnuplot iTorch; do { sed -i -e "s/\(.*$pkg.*\)/echo skipping $pkg # \1/" install.sh; } done
-awk ''NR==2{print "set -x"}1'' install.sh > ~install.sh
+awk 'NR==2{print "set -x"}1' install.sh > ~install.sh
 mv ~install.sh install.sh
 chmod +x install.sh
 cat install.sh
