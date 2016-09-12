@@ -1,0 +1,46 @@
+language: objective-c
+matrix:
+  include:
+    - env: OSX=10.11 TOXENV=py33
+      os: osx
+      osx_image: xcode7.3
+      rvm: system
+
+before_install:
+  - if [ -f ".git/shallow" ]; then travis_retry git fetch --unshallow; fi
+  - whoami
+  - export BASE=$(pwd)
+  - echo BASE $BASE
+  - git clone https://github.com/hughperkins/pytorch
+  - cd ${BASE}
+  - git clone https://github.com/hughperkins/distro-cl -b distro-cl torch-cl
+  - cd torch-cl
+  - bash ${BASE}/travis/install_distro_cl.sh
+  - cd ${BASE}
+  - echo ========== virtualenv ============
+  - wget https://pypi.python.org/packages/source/v/virtualenv/virtualenv-14.0.6.tar.gz
+  - tar -xf virtualenv-14.0.6.tar.gz
+  - echo =========== python 3.4 =================
+  - wget https://www.python.org/ftp/python/3.4.4/python-3.4.4-macosx10.6.pkg
+  - sudo installer -pkg python-3.4.4-macosx10.6.pkg -target /
+  - python3 -V
+  - virtualenv-14.0.6/virtualenv.py -p python3 ~/env34
+  - source ~/env34/bin/activate
+  - pip install -r ${BASE}/pytorch/requirements.txt
+  - pip install -r ${BASE}/pytorch/test/requirements.txt
+  - source ${BASE}/torch-cl/install/bin/torch-activate
+  - cd ${BASE}/pytorch
+  - bash build.sh
+  - py.test -sv
+  - cd ${BASE}
+  - pip install -r requirements.txt
+  - NOPYTORCHBUILD=1 bash build.sh
+
+script:
+  - cd ${BASE}
+  - python test_cltorch.py
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
