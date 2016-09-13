@@ -17,6 +17,9 @@ cdef extern from "LuaHelper.h":
 
 cdef extern from "THClGeneral.h":
     cdef struct THClState
+    int THClState_getNumDevices(THClState* state);
+    void THClState_setDevice(THClState* state, int device);
+    int THClState_getDevice(THClState* state)
 
 cdef extern from "THTensor.h":
     cdef struct THFloatTensor
@@ -66,16 +69,17 @@ cdef class ClTensor(object):
             for arg in args:
                 if not isinstance(arg, int):
                     raise Exception('cannot provide arguments to initializer')
+            device = THClState_getDevice(clGlobalState.state)
             if len(args) == 0:
-                self.native = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
+                self.native = THClTensor_newv2(clGlobalState.state, device)
             elif len(args) == 1:
-                self.native = THClTensor_newWithSize1d(clGlobalState.state, 0, args[0])  # FIXME get device from state
+                self.native = THClTensor_newWithSize1d(clGlobalState.state, device, args[0])
             elif len(args) == 2:
-                self.native = THClTensor_newWithSize2d(clGlobalState.state, 0, args[0], args[1])  # FIXME get device from state
+                self.native = THClTensor_newWithSize2d(clGlobalState.state, device, args[0], args[1])
             elif len(args) == 3:
-                self.native = THClTensor_newWithSize3d(clGlobalState.state, 0, args[0], args[1], args[2])  # FIXME get device from state
+                self.native = THClTensor_newWithSize3d(clGlobalState.state, device, args[0], args[1], args[2])
             elif len(args) == 4:
-                self.native = THClTensor_newWithSize4d(clGlobalState.state, 0, args[0], args[1], args[2], args[3])  # FIXME get device from state
+                self.native = THClTensor_newWithSize4d(clGlobalState.state, device, args[0], args[1], args[2], args[3])
             else:
                 raise Exception('Not implemented, len(args)=' + str(len(args)))
 
@@ -198,6 +202,18 @@ cdef class ClGlobalState(object):
 #        print('ClGlobalState.__dealloc__')
 
 cdef ClGlobalState clGlobalState
+
+def getDeviceCount():
+    global clGlobalState
+    return THClState_getNumDevices(clGlobalState.state)
+
+def setDevice(device):
+    global clGlobalState
+    THClState_setDevice(clGlobalState.state, device)
+
+def getDevice():
+    global clGlobalState
+    return THClState_getDevice(clGlobalState.state)
 
 def init():
     global clGlobalState
