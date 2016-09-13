@@ -7,7 +7,7 @@
 from __future__ import print_function
 import os
 import os.path
-import sys
+from os.path import join
 import platform
 from setuptools import setup
 from setuptools import Extension
@@ -15,6 +15,13 @@ from Cython.Build import cythonize
 
 home_dir = os.getenv('HOME')
 print('home_dir:', home_dir)
+
+torch_install_dir = os.getenv('TORCH_INSTALL')
+if torch_install_dir is None:
+    raise Exception('Please ensure TORCH_INSTALL env var is defined')
+osfamily = platform.uname()[0]
+print('torch_install:', torch_install_dir)
+print('os family', osfamily)
 
 cython_present = True
 
@@ -41,7 +48,7 @@ libraries.append('PyTorchNative')
 # libraries.append('PyTorch')
 library_dirs = []
 library_dirs.append('cbuild')
-library_dirs.append(home_dir + '/torch/install/lib')
+library_dirs.append(join(torch_install_dir, 'lib'))
 
 if osfamily == 'Linux':
     runtime_library_dirs = ['.']
@@ -56,9 +63,9 @@ ext_modules = [
     Extension("PyClTorch",
               sources=sources,
               include_dirs=[
-                  home_dir + '/torch/install/include',
-                  home_dir + '/torch/install/include/TH',
-                  home_dir + '/torch/install/include/THCl',
+                  join(torch_install_dir, 'include'),
+                  join(torch_install_dir, 'include/TH'),
+                  join(torch_install_dir, 'include/THCl'),
                   '/usr/include/lua5.1',
                   '../pytorch/src'],
               library_dirs=library_dirs,

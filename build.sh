@@ -11,6 +11,8 @@
 # NOPYTORCHBUILD=1  => doesnt rebuild pytorch
 # NOGIT=1  => doesnt pull from git into pytorch
 
+export TORCH_INSTALL=$(dirname $(dirname $(which luajit) 2>/dev/null) 2>/dev/null)
+
 if [[ x${NOPYTORCHBUILD} == x ]]; then {
     (
         cd ../pytorch
@@ -23,8 +25,8 @@ if [[ x${NOPYTORCHBUILD} == x ]]; then {
         python setup.py install || exit 1
     )
 } fi
-rm -Rf build cbuild dist *.so *.pyc PyCltorch.cpp
+rm -Rf build cbuild dist *.so *.pyc PyCltorch.cpp __pycache__
 #mkdir cbuild
 #(cd cbuild; cmake .. && make -j 4 ) || exit 1
 # python setup.py build_ext -i || exit 1
-pip install -e ./
+pip install --verbose -e ./

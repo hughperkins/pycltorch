@@ -7,8 +7,12 @@ cimport cpython.array
 import array
 
 import PyTorch
+from PyTorch import _LongStorage, _FloatTensor
 cimport PyTorch
 cimport Storage
+
+# {% set Real = 'Cl' %}
+# {% set real = 'cl' %}
 
 cdef extern from "LuaHelper.h":
     cdef struct lua_State
@@ -21,8 +25,20 @@ cdef extern from "THClGeneral.h":
     void THClState_setDevice(THClState* state, int device);
     int THClState_getDevice(THClState* state)
 
+cdef extern from "THStorage.h":
+    cdef struct THLongStorage
+    void THLongStorage_free(THLongStorage *self)
+
 cdef extern from "THTensor.h":
     cdef struct THFloatTensor
+    THFloatTensor *THFloatTensor_new()
+    void THFloatTensor_resize1d(THFloatTensor *self, long size0)
+    void THFloatTensor_resize2d(THFloatTensor *self, long size0, long size1)
+    void THFloatTensor_set1d(const THFloatTensor *tensor, long x0, float value)
+    void THFloatTensor_set2d(const THFloatTensor *tensor, long x0, long x1, float value)
+    void THFloatTensor_free(THFloatTensor *self)
+    THLongStorage *THFloatTensor_newSizeOf(THFloatTensor *self)
+    THLongStorage *THFloatTensor_newStrideOf(THFloatTensor *self)
 
 cdef extern from "THClTensor.h":
     cdef struct THClTensor
@@ -31,6 +47,8 @@ cdef extern from "THClTensor.h":
     THClTensor *THClTensor_newWithSize2d(THClState *state, int device, long size0, long size1)
     THClTensor *THClTensor_newWithSize3d(THClState *state, int device, long size0, long size1, long size2)
     THClTensor *THClTensor_newWithSize4d(THClState *state, int device, long size0, long size1, long size2, long size3)
+    float THClTensor_get1d(THClState *state, const THClTensor *tensor, long x0)
+    float THClTensor_get2d(THClState *state, const THClTensor *tensor, long x0, long x1)
     void THClTensor_retain(THClState *state, THClTensor*self)
     void THClTensor_free(THClState *state, THClTensor *tensor)
     int THClTensor_nDimension(THClState *state, THClTensor *tensor)
@@ -38,6 +56,9 @@ cdef extern from "THClTensor.h":
     long THClTensor_nElement(THClState *state, const THClTensor *self)
     void THClTensor_resizeAs(THClState *state, THClTensor *self, THClTensor *model)
     THClTensor *THClTensor_newSelect(THClState *state, THClTensor *self, int dimension, int sliceIndex)
+    void THClTensor_resize1d(THClState *state, THClTensor *self, long size0)
+    void THClTensor_resize2d(THClState *state, THClTensor *self, long size0, long size1)
+    void THClTensor_resize(THClState *state, THClTensor *tensor, THLongStorage *size, THLongStorage *stride)
 
 cdef extern from "THClTensorCopy.h":
     void THClTensor_copyFloat(THClState *state, THClTensor *self, THFloatTensor *src)
@@ -64,8 +85,53 @@ cdef class ClTensor(object):
     cdef THClTensor *native
 
     def __cinit__(ClTensor self, *args, _allocate=True):
-#        print('ClTensor.__cinit__')
         if _allocate:
+            if len(args) == 1 and isinstance(args[0], _LongStorage):  # it's a size tensor
+               print('longstorage sie tensor')
+               self.native = THClTensor_newv2(clGlobalState.state, 0) #FIXME get device from state
+               self.resize(args[0])
+               return
+            if len(args) == 1 and isinstance(args[0], list):  # it's some data
+                print('data list')
+                node = args[0]
+                nDims = 0
+                dims = []
+                nElements = 1 # len(node)
+                # dims.append(len(node))
+                while isinstance(node, list):
+                    print('node', node)
+                    nElements *= len(node)
+                    dims.append(len(node))
+                    nDims += 1
+                    node = node[0]
+                print('nDims', nDims, 'nElements', nElements, 'dims', dims)
+                if nDims > 2:
+                    raise Exception('more than 2 dimensions in list initializer not currently handled')
+                size = PyTorch.LongStorage(nDims)
+                for i, dim in enumerate(dims):
+                    size[i] = dim
+                print('size', size)
+                floatnative = THFloatTensor_new()
+                self.native = THClTensor_newv2(clGlobalState.state, 0) #FIXME get device from state
+                if nDims == 2:
+                    THFloatTensor_resize2d(floatnative, dims[0], dims[1])
+                    THClTensor_resize2d(clGlobalState.state, self.native, dims[0], dims[1])
+                    for i1 in range(dims[0]):
+                        row = args[0][i1]
+                        for i2 in range(dims[1]):
+                            value = row[i2]
+                            THFloatTensor_set2d(floatnative, i1, i2, value)
+                elif nDims == 1:
+                    THFloatTensor_resize1d(floatnative, dims[0])
+                    THClTensor_resize1d(clGlobalState.state, self.native, dims[0])
+                    for i1 in range(dims[0]):
+                        value = args[0][i1]
+                        THFloatTensor_set1d(floatnative, i1, value)
+                # self.resize(args[0])
+                THClTensor_copyFloat(clGlobalState.state, self.native, floatnative)
+                # self.native.copy(floatnative)
+                THFloatTensor_free(floatnative)
+                return
             for arg in args:
                 if not isinstance(arg, int):
                     raise Exception('cannot provide arguments to initializer')
@@ -84,14 +150,17 @@ cdef class ClTensor(object):
                 raise Exception('Not implemented, len(args)=' + str(len(args)))
 
     def __dealloc__(ClTensor self):
-#        print('ClTensor.__dealloc__')
         THClTensor_free(clGlobalState.state, self.native)
 
     @staticmethod
     def new():
         return ClTensor()
-#        cdef THClTensor *newTensorC = THClTensor_newv2(clGlobalState.state, 0)  # FIXME get device from state
-#        return ClTensor_fromNative(newTensorC, False)
+
+    cpdef float get1d(self, int x0):
+        return THClTensor_get1d(clGlobalState.state, self.native, x0)
+
+    cpdef float get2d(self, int x0, int x1):
+        return THClTensor_get2d(clGlobalState.state, self.native, x0, x1)
 
     def __repr__(ClTensor self):
         cdef PyTorch._FloatTensor floatTensor = self.float()
@@ -120,7 +189,6 @@ cdef class ClTensor(object):
     def size(ClTensor self):
         cdef int dims = self.dims()
         cdef Storage._LongStorage size
-#        print('cltensor.size long versoin')
         if dims >= 0:
             size = Storage._LongStorage(dims)
             for d in range(dims):
@@ -146,17 +214,40 @@ cdef class ClTensor(object):
         cdef THClTensor *res = THClTensor_newSelect(clGlobalState.state, self.native, 0, index)
         return ClTensor_fromNative(res, False)
 
-    def resizeAs(ClTensor self, ClTensor model):
-        THClTensor_resizeAs(clGlobalState.state, self.native, model.native)
-        return self
+    def __setitem__(ClTensor self, int index, float value):
+        if self.dims() == 1:
+            self.set1d(index, value)
+        else:
+            raise Exception("not implemented")
+
+#    def __getitem__(ClTensor self, int index):
+#        if self.dims() == 1:
+#            return self.get1d(index)
+#        cdef THClTensor *res = THClTensor_newSelect(clGlobalState.state, self.native, 0, index)
+#        return ClTensor_fromNative(res, False)
+
+    def resizeAs(ClTensor self, model):
+        cdef ClTensor model_cl
+        cdef PyTorch._FloatTensor model_float
+        if isinstance(model, ClTensor):
+            model_cl = model
+            THClTensor_resizeAs(clGlobalState.state, self.native, model_cl.native)
+            return self
+        elif isinstance(model, PyTorch._FloatTensor):
+            model_float = model
+            sizenative = THFloatTensor_newSizeOf(model_float.native)
+            stridenative = THFloatTensor_newStrideOf(model_float.native)
+            THClTensor_resize(clGlobalState.state, self.native, sizenative, stridenative)
+            THLongStorage_free(sizenative)
+            THLongStorage_free(stridenative)
+            return self
+        else:
+            raise Exception('resizeAs not implemetned for %s' % type(model))
 
     def uniform(ClTensor self, float a=0, float b=1):
         cdef Storage._LongStorage size = self.size()
         cdef PyTorch._FloatTensor floatTensor
-#        print('size', size)
         floatTensor = PyTorch._FloatTensor(size)
-#        print('got floattensor')
-#        print('uniform, floatTensor=', floatTensor)
         floatTensor.uniform(a, b)
         self.copy(floatTensor)
         return self
@@ -195,12 +286,6 @@ cdef PyTorch.GlobalState globalState = PyTorch.getGlobalState()
 cdef class ClGlobalState(object):
     cdef THClState *state
 
-#    def __cinit__(ClGlobalState self):
-#        print('ClGlobalState.__cinit__')
-
-#    def __dealloc__(self):
-#        print('ClGlobalState.__dealloc__')
-
 cdef ClGlobalState clGlobalState
 
 def getDeviceCount():
@@ -226,4 +311,3 @@ def init():
     print(' ... PyClTorch initialized')
 
 init()
-

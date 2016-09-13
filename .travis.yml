@@ -16,6 +16,8 @@ before_install:
   - git clone https://github.com/hughperkins/distro-cl -b distro-cl torch-cl
   - cd torch-cl
   - bash ${BASE}/travis/install_distro_cl.sh
+  - source ${BASE}/torch-cl/install/bin/torch-activate
+  - luarocks install nnx
   - cd ${BASE}
   - echo ========== virtualenv ============
   - wget https://pypi.python.org/packages/source/v/virtualenv/virtualenv-14.0.6.tar.gz
@@ -34,11 +36,12 @@ before_install:
   - py.test -sv
   - cd ${BASE}
   - pip install -r requirements.txt
+  - pip install -r test/requirements.txt
   - NOPYTORCHBUILD=1 bash build.sh
 
 script:
   - cd ${BASE}
-  - python test_cltorch.py
+  - py.test -sv
 
 notifications:
   email:
