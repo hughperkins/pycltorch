@@ -16,6 +16,7 @@ before_install:
   - git clone https://github.com/hughperkins/distro-cl -b distro-cl torch-cl
   - cd torch-cl
   - bash ${BASE}/travis/install_distro_cl.sh
+  - luarocks install nnx
   - cd ${BASE}
   - echo ========== virtualenv ============
   - wget https://pypi.python.org/packages/source/v/virtualenv/virtualenv-14.0.6.tar.gz
