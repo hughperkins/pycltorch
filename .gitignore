@@ -33,3 +33,9 @@ dist/
 *.exe
 *.out
 *.app
+
+# jupyter
+.ipynb_*
+
+# pep8 cache
+.cache/
