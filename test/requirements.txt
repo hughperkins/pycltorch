@@ -1,3 +1,4 @@
 pytest
+python-mnist
 pytest-pep8
 pep8
