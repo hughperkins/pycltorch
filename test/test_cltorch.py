@@ -1,26 +1,39 @@
 from __future__ import print_function
+import PyTorch
 import PyClTorch
 from PyTorchAug import nn
-
-# PyClTorch.newfunction(123)
-
-import PyTorch
 from PyTorchAug import *
+from test.test_helpers import myeval
 
 
-def myeval(expr):
-    print(expr, ':', eval(expr))
-
-
-if __name__ == '__main__':
+def test_cltorch():
     # a = PyTorch.foo(3,2)
     # print('a', a)
     # print(PyTorch.FloatTensor(3,2))
 
+    a = PyClTorch.ClTensor([3, 4, 9])
+    assert a[0] == 3
+    assert a[1] == 4
+    assert a[2] == 9
+    print('a', a)
+
+    a = PyClTorch.ClTensor([[3, 5, 7], [9, 2, 4]])
+    print('a', a)
+    print('a[0]', a[0])
+    print('a[0][0]', a[0][0])
+    assert a[0][0] == 3
+    assert a[1][0] == 9
+    assert a[1][2] == 4
+
+    PyTorch.manualSeed(123)
     a = PyTorch.FloatTensor(4, 3).uniform()
     print('a', a)
-    a = a.cl()
-    print(type(a))
+    a_cl = a.cl()
+    print(type(a_cl))
+    assert str(type(a_cl)) == '<class \'PyClTorch.ClTensor\'>'
+    print('a_cl[0]', a_cl[0])
+    print('a_cl[0][0]', a_cl[0][0])
+    assert a[0][0] == a_cl[0][0]
 
     print('a.dims()', a.dims())
     print('a.size()', a.size())
