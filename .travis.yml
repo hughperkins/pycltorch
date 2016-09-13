@@ -40,7 +40,7 @@ before_install:
 
 script:
   - cd ${BASE}
-  - python test_cltorch.py
+  - py.test -sv
 
 notifications:
   email:
