@@ -650,7 +650,7 @@ struct __pyx_obj_7PyTorch__LongTensor {
 };
 
 
-/* "PyTorch.pxd":39
+/* "PyTorch.pxd":42
  *     cdef struct THFloatTensor
  * 
  * cdef class _FloatTensor(object):             # <<<<<<<<<<<<<<
@@ -664,7 +664,7 @@ struct __pyx_obj_7PyTorch__FloatTensor {
 };
 
 
-/* "PyTorch.pxd":58
+/* "PyTorch.pxd":64
  *     cdef struct THDoubleTensor
  * 
  * cdef class _DoubleTensor(object):             # <<<<<<<<<<<<<<
@@ -678,7 +678,7 @@ struct __pyx_obj_7PyTorch__DoubleTensor {
 };
 
 
-/* "PyTorch.pxd":77
+/* "PyTorch.pxd":86
  *     cdef struct THByteTensor
  * 
  * cdef class _ByteTensor(object):             # <<<<<<<<<<<<<<
@@ -692,7 +692,7 @@ struct __pyx_obj_7PyTorch__ByteTensor {
 };
 
 
-/* "PyTorch.pxd":91
+/* "PyTorch.pxd":103
  * 
  * 
  * cdef class GlobalState:             # <<<<<<<<<<<<<<
@@ -806,11 +806,13 @@ struct __pyx_vtabstruct_7PyTorch__LongTensor {
   long (*get1d)(struct __pyx_obj_7PyTorch__LongTensor *, int, int __pyx_skip_dispatch);
   long (*get2d)(struct __pyx_obj_7PyTorch__LongTensor *, int, int, int __pyx_skip_dispatch);
   int (*isContiguous)(struct __pyx_obj_7PyTorch__LongTensor *, int __pyx_skip_dispatch);
+  long (*max)(struct __pyx_obj_7PyTorch__LongTensor *, int __pyx_skip_dispatch);
+  long (*min)(struct __pyx_obj_7PyTorch__LongTensor *, int __pyx_skip_dispatch);
 };
 static struct __pyx_vtabstruct_7PyTorch__LongTensor *__pyx_vtabptr_7PyTorch__LongTensor;
 
 
-/* "PyTorch.pxd":39
+/* "PyTorch.pxd":42
  *     cdef struct THFloatTensor
  * 
  * cdef class _FloatTensor(object):             # <<<<<<<<<<<<<<
@@ -826,11 +828,13 @@ struct __pyx_vtabstruct_7PyTorch__FloatTensor {
   float (*get1d)(struct __pyx_obj_7PyTorch__FloatTensor *, int, int __pyx_skip_dispatch);
   float (*get2d)(struct __pyx_obj_7PyTorch__FloatTensor *, int, int, int __pyx_skip_dispatch);
   int (*isContiguous)(struct __pyx_obj_7PyTorch__FloatTensor *, int __pyx_skip_dispatch);
+  float (*max)(struct __pyx_obj_7PyTorch__FloatTensor *, int __pyx_skip_dispatch);
+  float (*min)(struct __pyx_obj_7PyTorch__FloatTensor *, int __pyx_skip_dispatch);
 };
 static struct __pyx_vtabstruct_7PyTorch__FloatTensor *__pyx_vtabptr_7PyTorch__FloatTensor;
 
 
-/* "PyTorch.pxd":58
+/* "PyTorch.pxd":64
  *     cdef struct THDoubleTensor
  * 
  * cdef class _DoubleTensor(object):             # <<<<<<<<<<<<<<
@@ -846,11 +850,13 @@ struct __pyx_vtabstruct_7PyTorch__DoubleTensor {
   double (*get1d)(struct __pyx_obj_7PyTorch__DoubleTensor *, int, int __pyx_skip_dispatch);
   double (*get2d)(struct __pyx_obj_7PyTorch__DoubleTensor *, int, int, int __pyx_skip_dispatch);
   int (*isContiguous)(struct __pyx_obj_7PyTorch__DoubleTensor *, int __pyx_skip_dispatch);
+  double (*max)(struct __pyx_obj_7PyTorch__DoubleTensor *, int __pyx_skip_dispatch);
+  double (*min)(struct __pyx_obj_7PyTorch__DoubleTensor *, int __pyx_skip_dispatch);
 };
 static struct __pyx_vtabstruct_7PyTorch__DoubleTensor *__pyx_vtabptr_7PyTorch__DoubleTensor;
 
 
-/* "PyTorch.pxd":77
+/* "PyTorch.pxd":86
  *     cdef struct THByteTensor
  * 
  * cdef class _ByteTensor(object):             # <<<<<<<<<<<<<<
@@ -866,6 +872,8 @@ struct __pyx_vtabstruct_7PyTorch__ByteTensor {
   unsigned char (*get1d)(struct __pyx_obj_7PyTorch__ByteTensor *, int, int __pyx_skip_dispatch);
   unsigned char (*get2d)(struct __pyx_obj_7PyTorch__ByteTensor *, int, int, int __pyx_skip_dispatch);
   int (*isContiguous)(struct __pyx_obj_7PyTorch__ByteTensor *, int __pyx_skip_dispatch);
+  unsigned char (*max)(struct __pyx_obj_7PyTorch__ByteTensor *, int __pyx_skip_dispatch);
+  unsigned char (*min)(struct __pyx_obj_7PyTorch__ByteTensor *, int __pyx_skip_dispatch);
 };
 static struct __pyx_vtabstruct_7PyTorch__ByteTensor *__pyx_vtabptr_7PyTorch__ByteTensor;
 
@@ -7143,13 +7151,13 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
   __pyx_ptype_7cpython_5array_array = __Pyx_ImportType("array", "array", sizeof(arrayobject), 0); if (unlikely(!__pyx_ptype_7cpython_5array_array)) __PYX_ERR(1, 58, __pyx_L1_error)
   __pyx_ptype_7PyTorch__LongTensor = __Pyx_ImportType("PyTorch", "_LongTensor", sizeof(struct __pyx_obj_7PyTorch__LongTensor), 1); if (unlikely(!__pyx_ptype_7PyTorch__LongTensor)) __PYX_ERR(3, 20, __pyx_L1_error)
   __pyx_vtabptr_7PyTorch__LongTensor = (struct __pyx_vtabstruct_7PyTorch__LongTensor*)__Pyx_GetVtable(__pyx_ptype_7PyTorch__LongTensor->tp_dict); if (unlikely(!__pyx_vtabptr_7PyTorch__LongTensor)) __PYX_ERR(3, 20, __pyx_L1_error)
-  __pyx_ptype_7PyTorch__FloatTensor = __Pyx_ImportType("PyTorch", "_FloatTensor", sizeof(struct __pyx_obj_7PyTorch__FloatTensor), 1); if (unlikely(!__pyx_ptype_7PyTorch__FloatTensor)) __PYX_ERR(3, 39, __pyx_L1_error)
-  __pyx_vtabptr_7PyTorch__FloatTensor = (struct __pyx_vtabstruct_7PyTorch__FloatTensor*)__Pyx_GetVtable(__pyx_ptype_7PyTorch__FloatTensor->tp_dict); if (unlikely(!__pyx_vtabptr_7PyTorch__FloatTensor)) __PYX_ERR(3, 39, __pyx_L1_error)
-  __pyx_ptype_7PyTorch__DoubleTensor = __Pyx_ImportType("PyTorch", "_DoubleTensor", sizeof(struct __pyx_obj_7PyTorch__DoubleTensor), 1); if (unlikely(!__pyx_ptype_7PyTorch__DoubleTensor)) __PYX_ERR(3, 58, __pyx_L1_error)
-  __pyx_vtabptr_7PyTorch__DoubleTensor = (struct __pyx_vtabstruct_7PyTorch__DoubleTensor*)__Pyx_GetVtable(__pyx_ptype_7PyTorch__DoubleTensor->tp_dict); if (unlikely(!__pyx_vtabptr_7PyTorch__DoubleTensor)) __PYX_ERR(3, 58, __pyx_L1_error)
-  __pyx_ptype_7PyTorch__ByteTensor = __Pyx_ImportType("PyTorch", "_ByteTensor", sizeof(struct __pyx_obj_7PyTorch__ByteTensor), 1); if (unlikely(!__pyx_ptype_7PyTorch__ByteTensor)) __PYX_ERR(3, 77, __pyx_L1_error)
-  __pyx_vtabptr_7PyTorch__ByteTensor = (struct __pyx_vtabstruct_7PyTorch__ByteTensor*)__Pyx_GetVtable(__pyx_ptype_7PyTorch__ByteTensor->tp_dict); if (unlikely(!__pyx_vtabptr_7PyTorch__ByteTensor)) __PYX_ERR(3, 77, __pyx_L1_error)
-  __pyx_ptype_7PyTorch_GlobalState = __Pyx_ImportType("PyTorch", "GlobalState", sizeof(struct __pyx_obj_7PyTorch_GlobalState), 1); if (unlikely(!__pyx_ptype_7PyTorch_GlobalState)) __PYX_ERR(3, 91, __pyx_L1_error)
+  __pyx_ptype_7PyTorch__FloatTensor = __Pyx_ImportType("PyTorch", "_FloatTensor", sizeof(struct __pyx_obj_7PyTorch__FloatTensor), 1); if (unlikely(!__pyx_ptype_7PyTorch__FloatTensor)) __PYX_ERR(3, 42, __pyx_L1_error)
+  __pyx_vtabptr_7PyTorch__FloatTensor = (struct __pyx_vtabstruct_7PyTorch__FloatTensor*)__Pyx_GetVtable(__pyx_ptype_7PyTorch__FloatTensor->tp_dict); if (unlikely(!__pyx_vtabptr_7PyTorch__FloatTensor)) __PYX_ERR(3, 42, __pyx_L1_error)
+  __pyx_ptype_7PyTorch__DoubleTensor = __Pyx_ImportType("PyTorch", "_DoubleTensor", sizeof(struct __pyx_obj_7PyTorch__DoubleTensor), 1); if (unlikely(!__pyx_ptype_7PyTorch__DoubleTensor)) __PYX_ERR(3, 64, __pyx_L1_error)
+  __pyx_vtabptr_7PyTorch__DoubleTensor = (struct __pyx_vtabstruct_7PyTorch__DoubleTensor*)__Pyx_GetVtable(__pyx_ptype_7PyTorch__DoubleTensor->tp_dict); if (unlikely(!__pyx_vtabptr_7PyTorch__DoubleTensor)) __PYX_ERR(3, 64, __pyx_L1_error)
+  __pyx_ptype_7PyTorch__ByteTensor = __Pyx_ImportType("PyTorch", "_ByteTensor", sizeof(struct __pyx_obj_7PyTorch__ByteTensor), 1); if (unlikely(!__pyx_ptype_7PyTorch__ByteTensor)) __PYX_ERR(3, 86, __pyx_L1_error)
+  __pyx_vtabptr_7PyTorch__ByteTensor = (struct __pyx_vtabstruct_7PyTorch__ByteTensor*)__Pyx_GetVtable(__pyx_ptype_7PyTorch__ByteTensor->tp_dict); if (unlikely(!__pyx_vtabptr_7PyTorch__ByteTensor)) __PYX_ERR(3, 86, __pyx_L1_error)
+  __pyx_ptype_7PyTorch_GlobalState = __Pyx_ImportType("PyTorch", "GlobalState", sizeof(struct __pyx_obj_7PyTorch_GlobalState), 1); if (unlikely(!__pyx_ptype_7PyTorch_GlobalState)) __PYX_ERR(3, 103, __pyx_L1_error)
   __pyx_ptype_7Storage__LongStorage = __Pyx_ImportType("Storage", "_LongStorage", sizeof(struct __pyx_obj_7Storage__LongStorage), 1); if (unlikely(!__pyx_ptype_7Storage__LongStorage)) __PYX_ERR(4, 91, __pyx_L1_error)
   __pyx_vtabptr_7Storage__LongStorage = (struct __pyx_vtabstruct_7Storage__LongStorage*)__Pyx_GetVtable(__pyx_ptype_7Storage__LongStorage->tp_dict); if (unlikely(!__pyx_vtabptr_7Storage__LongStorage)) __PYX_ERR(4, 91, __pyx_L1_error)
   __pyx_ptype_7Storage__FloatStorage = __Pyx_ImportType("Storage", "_FloatStorage", sizeof(struct __pyx_obj_7Storage__FloatStorage), 1); if (unlikely(!__pyx_ptype_7Storage__FloatStorage)) __PYX_ERR(4, 99, __pyx_L1_error)
