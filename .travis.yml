@@ -9,7 +9,6 @@ matrix:
 before_install:
   - if [ -f ".git/shallow" ]; then travis_retry git fetch --unshallow; fi
   - whoami
-  - bash travis/download_mnist.sh
   - export BASE=$(pwd)
   - echo BASE $BASE
   - git clone https://github.com/hughperkins/pytorch
@@ -33,6 +32,7 @@ before_install:
   - pip install -r ${BASE}/pytorch/test/requirements.txt
   - source ${BASE}/torch-cl/install/bin/torch-activate
   - cd ${BASE}/pytorch
+  - bash ${BASE}/travis/download_mnist.sh
   - bash build.sh
   - py.test -sv
   - cd ${BASE}
