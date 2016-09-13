@@ -9,6 +9,7 @@ matrix:
 before_install:
   - if [ -f ".git/shallow" ]; then travis_retry git fetch --unshallow; fi
   - whoami
+  - bash travis/download_mnist.sh
   - export BASE=$(pwd)
   - echo BASE $BASE
   - git clone https://github.com/hughperkins/pytorch
