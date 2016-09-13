@@ -34,18 +34,31 @@ def test_cltorch():
     print('a_cl[0]', a_cl[0])
     print('a_cl[0][0]', a_cl[0][0])
     assert a[0][0] == a_cl[0][0]
+    assert a[0][1] == a_cl[0][1]
+    assert a[1][1] == a_cl[1][1]
 
     print('a.dims()', a.dims())
     print('a.size()', a.size())
     print('a', a)
+    assert a.dims() == 2
+    assert a.size()[0] == 4
+    assert a.size()[1] == 3
 
-    print('sum:', a.sum())
-    myeval('a + 1')
+    a_sum = a.sum()
+    a_cl_sum = a_cl.sum()
+    assert abs(a_sum - a_cl_sum) < 1e-4
+    a_cl2 = a_cl + 3.2
+    assert abs(a_cl2[1][0] - a[1][0] - 3.2) < 1e-4
+
     b = PyClTorch.ClTensor()
     print('got b')
     myeval('b')
+    assert b.dims() == -1
     b.resizeAs(a)
     myeval('b')
+    assert b.dims() == 2
+    assert b.size()[0] == 4
+    assert b.size()[1] == 3
     print('run uniform')
     b.uniform()
     myeval('b')
@@ -60,6 +73,8 @@ def test_cltorch():
     print('c.dims()', c.dims())
     print('c.size()', c.size())
     print('c', c)
+    assert b.dims() == -1
+    assert b.size() is None
 
     print('creating Linear...')
     linear = nn.Linear(3, 5)
