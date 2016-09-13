@@ -22,6 +22,10 @@ cdef extern from "LuaHelper.h":
 cdef extern from "THClGeneral.h":
     cdef struct THClState
 
+cdef extern from "THStorage.h":
+    cdef struct THLongStorage
+    void THLongStorage_free(THLongStorage *self)
+
 cdef extern from "THTensor.h":
     cdef struct THFloatTensor
     THFloatTensor *THFloatTensor_new()
@@ -30,6 +34,8 @@ cdef extern from "THTensor.h":
     void THFloatTensor_set1d(const THFloatTensor *tensor, long x0, float value)
     void THFloatTensor_set2d(const THFloatTensor *tensor, long x0, long x1, float value)
     void THFloatTensor_free(THFloatTensor *self)
+    THLongStorage *THFloatTensor_newSizeOf(THFloatTensor *self)
+    THLongStorage *THFloatTensor_newStrideOf(THFloatTensor *self)
 
 cdef extern from "THClTensor.h":
     cdef struct THClTensor
@@ -49,6 +55,7 @@ cdef extern from "THClTensor.h":
     THClTensor *THClTensor_newSelect(THClState *state, THClTensor *self, int dimension, int sliceIndex)
     void THClTensor_resize1d(THClState *state, THClTensor *self, long size0)
     void THClTensor_resize2d(THClState *state, THClTensor *self, long size0, long size1)
+    void THClTensor_resize(THClState *state, THClTensor *tensor, THLongStorage *size, THLongStorage *stride)
 
 cdef extern from "THClTensorCopy.h":
     void THClTensor_copyFloat(THClState *state, THClTensor *self, THFloatTensor *src)
@@ -215,9 +222,23 @@ cdef class ClTensor(object):
 #        cdef THClTensor *res = THClTensor_newSelect(clGlobalState.state, self.native, 0, index)
 #        return ClTensor_fromNative(res, False)
 
-    def resizeAs(ClTensor self, ClTensor model):
-        THClTensor_resizeAs(clGlobalState.state, self.native, model.native)
-        return self
+    def resizeAs(ClTensor self, model):
+        cdef ClTensor model_cl
+        cdef PyTorch._FloatTensor model_float
+        if isinstance(model, ClTensor):
+            model_cl = model
+            THClTensor_resizeAs(clGlobalState.state, self.native, model_cl.native)
+            return self
+        elif isinstance(model, PyTorch._FloatTensor):
+            model_float = model
+            sizenative = THFloatTensor_newSizeOf(model_float.native)
+            stridenative = THFloatTensor_newStrideOf(model_float.native)
+            THClTensor_resize(clGlobalState.state, self.native, sizenative, stridenative)
+            THLongStorage_free(sizenative)
+            THLongStorage_free(stridenative)
+            return self
+        else:
+            raise Exception('resizeAs not implemetned for %s' % type(model))
 
     def uniform(ClTensor self, float a=0, float b=1):
         cdef Storage._LongStorage size = self.size()
