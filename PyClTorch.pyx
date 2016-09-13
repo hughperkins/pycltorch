@@ -38,8 +38,8 @@ cdef extern from "THClTensor.h":
     THClTensor *THClTensor_newWithSize2d(THClState *state, int device, long size0, long size1)
     THClTensor *THClTensor_newWithSize3d(THClState *state, int device, long size0, long size1, long size2)
     THClTensor *THClTensor_newWithSize4d(THClState *state, int device, long size0, long size1, long size2, long size3)
-    unsigned char THClTensor_get1d(THClState *state, const THClTensor *tensor, long x0)
-    unsigned char THClTensor_get2d(THClState *state, const THClTensor *tensor, long x0, long x1)
+    float THClTensor_get1d(THClState *state, const THClTensor *tensor, long x0)
+    float THClTensor_get2d(THClState *state, const THClTensor *tensor, long x0, long x1)
     void THClTensor_retain(THClState *state, THClTensor*self)
     void THClTensor_free(THClState *state, THClTensor *tensor)
     int THClTensor_nDimension(THClState *state, THClTensor *tensor)
@@ -145,10 +145,10 @@ cdef class ClTensor(object):
     def new():
         return ClTensor()
 
-    cpdef long get1d(self, int x0):
+    cpdef float get1d(self, int x0):
         return THClTensor_get1d(clGlobalState.state, self.native, x0)
 
-    cpdef long get2d(self, int x0, int x1):
+    cpdef float get2d(self, int x0, int x1):
         return THClTensor_get2d(clGlobalState.state, self.native, x0, x1)
 
     def __repr__(ClTensor self):

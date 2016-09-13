@@ -935,8 +935,8 @@ static struct __pyx_vtabstruct_7Storage__ByteStorage *__pyx_vtabptr_7Storage__By
  */
 
 struct __pyx_vtabstruct_9PyClTorch_ClTensor {
-  long (*get1d)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int __pyx_skip_dispatch);
-  long (*get2d)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int, int __pyx_skip_dispatch);
+  float (*get1d)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int __pyx_skip_dispatch);
+  float (*get2d)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int, int __pyx_skip_dispatch);
   int (*dims)(struct __pyx_obj_9PyClTorch_ClTensor *, int __pyx_skip_dispatch);
 };
 static struct __pyx_vtabstruct_9PyClTorch_ClTensor *__pyx_vtabptr_9PyClTorch_ClTensor;
@@ -1346,8 +1346,8 @@ static PyTypeObject *__Pyx_ImportType(const char *module_name, const char *class
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static long __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_skip_dispatch); /* proto*/
-static long __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_v_x1, int __pyx_skip_dispatch); /* proto*/
+static float __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_skip_dispatch); /* proto*/
+static float __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_v_x1, int __pyx_skip_dispatch); /* proto*/
 static int __pyx_f_9PyClTorch_8ClTensor_dims(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 
 /* Module declarations from 'cython' */
@@ -3117,7 +3117,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_4new() {
  *     def new():
  *         return ClTensor()             # <<<<<<<<<<<<<<
  * 
- *     cpdef long get1d(self, int x0):
+ *     cpdef float get1d(self, int x0):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9PyClTorch_ClTensor), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
@@ -3148,14 +3148,14 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_4new() {
 /* "PyClTorch.pyx":148
  *         return ClTensor()
  * 
- *     cpdef long get1d(self, int x0):             # <<<<<<<<<<<<<<
+ *     cpdef float get1d(self, int x0):             # <<<<<<<<<<<<<<
  *         return THClTensor_get1d(clGlobalState.state, self.native, x0)
  * 
  */
 
 static PyObject *__pyx_pw_9PyClTorch_8ClTensor_7get1d(PyObject *__pyx_v_self, PyObject *__pyx_arg_x0); /*proto*/
-static long __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_skip_dispatch) {
-  long __pyx_r;
+static float __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_skip_dispatch) {
+  float __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3163,7 +3163,7 @@ static long __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTen
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
-  long __pyx_t_7;
+  float __pyx_t_7;
   __Pyx_RefNannySetupContext("get1d", 0);
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
@@ -3201,7 +3201,7 @@ static long __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTen
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 148, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_r = __pyx_t_7;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3212,10 +3212,10 @@ static long __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTen
 
   /* "PyClTorch.pyx":149
  * 
- *     cpdef long get1d(self, int x0):
+ *     cpdef float get1d(self, int x0):
  *         return THClTensor_get1d(clGlobalState.state, self.native, x0)             # <<<<<<<<<<<<<<
  * 
- *     cpdef long get2d(self, int x0, int x1):
+ *     cpdef float get2d(self, int x0, int x1):
  */
   __pyx_r = THClTensor_get1d(__pyx_v_9PyClTorch_clGlobalState->state, __pyx_v_self->native, __pyx_v_x0);
   goto __pyx_L0;
@@ -3223,7 +3223,7 @@ static long __pyx_f_9PyClTorch_8ClTensor_get1d(struct __pyx_obj_9PyClTorch_ClTen
   /* "PyClTorch.pyx":148
  *         return ClTensor()
  * 
- *     cpdef long get1d(self, int x0):             # <<<<<<<<<<<<<<
+ *     cpdef float get1d(self, int x0):             # <<<<<<<<<<<<<<
  *         return THClTensor_get1d(clGlobalState.state, self.native, x0)
  * 
  */
@@ -3272,7 +3272,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_6get1d(struct __pyx_obj_9PyClTorc
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get1d", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_f_9PyClTorch_8ClTensor_get1d(__pyx_v_self, __pyx_v_x0, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_9PyClTorch_8ClTensor_get1d(__pyx_v_self, __pyx_v_x0, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3292,14 +3292,14 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_6get1d(struct __pyx_obj_9PyClTorc
 /* "PyClTorch.pyx":151
  *         return THClTensor_get1d(clGlobalState.state, self.native, x0)
  * 
- *     cpdef long get2d(self, int x0, int x1):             # <<<<<<<<<<<<<<
+ *     cpdef float get2d(self, int x0, int x1):             # <<<<<<<<<<<<<<
  *         return THClTensor_get2d(clGlobalState.state, self.native, x0, x1)
  * 
  */
 
 static PyObject *__pyx_pw_9PyClTorch_8ClTensor_9get2d(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static long __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_v_x1, int __pyx_skip_dispatch) {
-  long __pyx_r;
+static float __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTensor *__pyx_v_self, int __pyx_v_x0, int __pyx_v_x1, int __pyx_skip_dispatch) {
+  float __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3309,7 +3309,7 @@ static long __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTen
   PyObject *__pyx_t_6 = NULL;
   Py_ssize_t __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
-  long __pyx_t_9;
+  float __pyx_t_9;
   __Pyx_RefNannySetupContext("get2d", 0);
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
@@ -3350,7 +3350,7 @@ static long __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTen
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_9 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_9 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L1_error)
+      __pyx_t_9 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_9 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_r = __pyx_t_9;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3361,7 +3361,7 @@ static long __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTen
 
   /* "PyClTorch.pyx":152
  * 
- *     cpdef long get2d(self, int x0, int x1):
+ *     cpdef float get2d(self, int x0, int x1):
  *         return THClTensor_get2d(clGlobalState.state, self.native, x0, x1)             # <<<<<<<<<<<<<<
  * 
  *     def __repr__(ClTensor self):
@@ -3372,7 +3372,7 @@ static long __pyx_f_9PyClTorch_8ClTensor_get2d(struct __pyx_obj_9PyClTorch_ClTen
   /* "PyClTorch.pyx":151
  *         return THClTensor_get1d(clGlobalState.state, self.native, x0)
  * 
- *     cpdef long get2d(self, int x0, int x1):             # <<<<<<<<<<<<<<
+ *     cpdef float get2d(self, int x0, int x1):             # <<<<<<<<<<<<<<
  *         return THClTensor_get2d(clGlobalState.state, self.native, x0, x1)
  * 
  */
@@ -3457,7 +3457,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_8get2d(struct __pyx_obj_9PyClTorc
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get2d", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_f_9PyClTorch_8ClTensor_get2d(__pyx_v_self, __pyx_v_x0, __pyx_v_x1, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_9PyClTorch_8ClTensor_get2d(__pyx_v_self, __pyx_v_x0, __pyx_v_x1, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4478,7 +4478,7 @@ static PyObject *__pyx_pf_9PyClTorch_8ClTensor_26__getitem__(struct __pyx_obj_9P
  *         return ClTensor_fromNative(res, False)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyInt_From_long(((struct __pyx_vtabstruct_9PyClTorch_ClTensor *)__pyx_v_self->__pyx_vtab)->get1d(__pyx_v_self, __pyx_v_index, 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(((struct __pyx_vtabstruct_9PyClTorch_ClTensor *)__pyx_v_self->__pyx_vtab)->get1d(__pyx_v_self, __pyx_v_index, 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
@@ -6961,8 +6961,8 @@ PyMODINIT_FUNC PyInit_PyClTorch(void)
   /*--- Function export code ---*/
   /*--- Type init code ---*/
   __pyx_vtabptr_9PyClTorch_ClTensor = &__pyx_vtable_9PyClTorch_ClTensor;
-  __pyx_vtable_9PyClTorch_ClTensor.get1d = (long (*)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int __pyx_skip_dispatch))__pyx_f_9PyClTorch_8ClTensor_get1d;
-  __pyx_vtable_9PyClTorch_ClTensor.get2d = (long (*)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int, int __pyx_skip_dispatch))__pyx_f_9PyClTorch_8ClTensor_get2d;
+  __pyx_vtable_9PyClTorch_ClTensor.get1d = (float (*)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int __pyx_skip_dispatch))__pyx_f_9PyClTorch_8ClTensor_get1d;
+  __pyx_vtable_9PyClTorch_ClTensor.get2d = (float (*)(struct __pyx_obj_9PyClTorch_ClTensor *, int, int, int __pyx_skip_dispatch))__pyx_f_9PyClTorch_8ClTensor_get2d;
   __pyx_vtable_9PyClTorch_ClTensor.dims = (int (*)(struct __pyx_obj_9PyClTorch_ClTensor *, int __pyx_skip_dispatch))__pyx_f_9PyClTorch_8ClTensor_dims;
   if (PyType_Ready(&__pyx_type_9PyClTorch_ClTensor) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
   __pyx_type_9PyClTorch_ClTensor.tp_print = 0;
