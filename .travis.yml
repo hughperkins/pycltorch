@@ -16,6 +16,7 @@ before_install:
   - git clone https://github.com/hughperkins/distro-cl -b distro-cl torch-cl
   - cd torch-cl
   - bash ${BASE}/travis/install_distro_cl.sh
+  - source ${BASE}/torch-cl/install/bin/torch-activate
   - luarocks install nnx
   - cd ${BASE}
   - echo ========== virtualenv ============
