@@ -11,8 +11,6 @@ before_install:
   - whoami
   - export BASE=$(pwd)
   - echo BASE $BASE
-  - git clone https://github.com/hughperkins/pytorch
-  - cd ${BASE}
   - git clone https://github.com/hughperkins/distro-cl -b distro-cl torch-cl
   - cd torch-cl
   - bash ${BASE}/travis/install_distro_cl.sh
@@ -32,6 +30,7 @@ before_install:
   - pip install -r ${BASE}/pytorch/test/requirements.txt
   - source ${BASE}/torch-cl/install/bin/torch-activate
   - cd ${BASE}/pytorch
+  - bash ${BASE}/travis/download_mnist.sh
   - bash build.sh
   - py.test -sv
   - cd ${BASE}
