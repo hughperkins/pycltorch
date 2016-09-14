@@ -4,6 +4,7 @@ cimport cython
 cimport cpython.array
 import array
 import PyTorch
+import PyTorchAug
 from PyTorch import _LongStorage, _FloatTensor
 cimport PyTorch
 cimport Storage
@@ -23,7 +24,7 @@ cdef extern from "THClGeneral.h":
     int THClState_getNumDevices(THClState* state);
     void THClState_setDevice(THClState* state, int device);
     int THClState_getDevice(THClState* state)
-
+    void THClSetAllowNonGpus(THClState* state, int allowNonGpus)
 
 cdef extern from "THStorage.h":
     cdef struct THLongStorage
@@ -301,6 +302,16 @@ cdef class ClGlobalState(object):
 
 
 cdef ClGlobalState clGlobalState
+
+
+def setAllowNonGpus(enabled):
+    # global clGlobalState, globalState
+    # lua = globalState.getLua()
+    # PyTorchAug.pushGlobal(lua, "cltorch", "setAllowNonGpus")
+    # PyTorchAug.pushSomething(lua, enabled)
+    # lua.call(1, 0)
+    global clGlobalState
+    THClSetAllowNonGpus(clGlobalState.state, enabled)
 
 
 def getDeviceCount():

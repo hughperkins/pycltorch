@@ -1,12 +1,16 @@
 from __future__ import print_function
 import PyTorch
 import PyClTorch
+import os
 from PyTorchAug import nn
 from PyTorchAug import *
 from test.test_helpers import myeval
 
 
 def test_cltorch():
+    if 'ALLOW_NON_GPUS' in os.environ:
+        PyClTorch.setAllowNonGpus(True)
+
     # a = PyTorch.foo(3,2)
     # print('a', a)
     # print(PyTorch.FloatTensor(3,2))

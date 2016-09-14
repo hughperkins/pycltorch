@@ -40,7 +40,7 @@ before_install:
 
 script:
   - cd ${BASE}
-  - py.test -sv
+  - ALLOW_NON_GPUS=1 py.test -sv
 
 notifications:
   email:
