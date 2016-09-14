@@ -1,1 +1,1 @@
-../pytorch/src/PyTorch.pxd
+pytorch/src/PyTorch.pxd

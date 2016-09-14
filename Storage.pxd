@@ -1,1 +1,1 @@
-../pytorch/src/Storage.pxd
+pytorch/src/Storage.pxd

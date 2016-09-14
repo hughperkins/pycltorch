@@ -11,8 +11,6 @@ before_install:
   - whoami
   - export BASE=$(pwd)
   - echo BASE $BASE
-  - git clone https://github.com/hughperkins/pytorch
-  - cd ${BASE}
   - git clone https://github.com/hughperkins/distro-cl -b distro-cl torch-cl
   - cd torch-cl
   - bash ${BASE}/travis/install_distro_cl.sh
