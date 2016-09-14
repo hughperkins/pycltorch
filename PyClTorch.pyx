@@ -1,11 +1,8 @@
 from __future__ import print_function
-
 import cython
 cimport cython
-
 cimport cpython.array
 import array
-
 import PyTorch
 from PyTorch import _LongStorage, _FloatTensor
 cimport PyTorch
@@ -14,10 +11,12 @@ cimport Storage
 # {% set Real = 'Cl' %}
 # {% set real = 'cl' %}
 
+
 cdef extern from "LuaHelper.h":
     cdef struct lua_State
     void *getGlobal(lua_State *L, const char *name1, const char *name2);
     void luaRequire(lua_State *L, const char *name)
+
 
 cdef extern from "THClGeneral.h":
     cdef struct THClState
@@ -25,9 +24,11 @@ cdef extern from "THClGeneral.h":
     void THClState_setDevice(THClState* state, int device);
     int THClState_getDevice(THClState* state)
 
+
 cdef extern from "THStorage.h":
     cdef struct THLongStorage
     void THLongStorage_free(THLongStorage *self)
+
 
 cdef extern from "THTensor.h":
     cdef struct THFloatTensor
@@ -39,6 +40,7 @@ cdef extern from "THTensor.h":
     void THFloatTensor_free(THFloatTensor *self)
     THLongStorage *THFloatTensor_newSizeOf(THFloatTensor *self)
     THLongStorage *THFloatTensor_newStrideOf(THFloatTensor *self)
+
 
 cdef extern from "THClTensor.h":
     cdef struct THClTensor
@@ -60,26 +62,32 @@ cdef extern from "THClTensor.h":
     void THClTensor_resize2d(THClState *state, THClTensor *self, long size0, long size1)
     void THClTensor_resize(THClState *state, THClTensor *tensor, THLongStorage *size, THLongStorage *stride)
 
+
 cdef extern from "THClTensorCopy.h":
     void THClTensor_copyFloat(THClState *state, THClTensor *self, THFloatTensor *src)
     void THFloatTensor_copyCl(THClState *state, THFloatTensor *self, THClTensor *src)
 
+
 cdef extern from "THClTensorMath.h":
     float THClTensor_sumall(THClState *state, THClTensor *self)
     void THClTensor_add(THClState *state, THClTensor *res, THClTensor *self, float scalar)
+
 
 cdef extern from "clnnWrapper.h":
     THClState *getState(lua_State *L)
     THClTensor *popClTensor(lua_State *L)
     void pushClTensor(THClState *state, lua_State *L, THClTensor *tensor)
 
+
 def cyPopClTensor():
     cdef THClTensor *tensorC = popClTensor(globalState.L)
     cdef ClTensor tensor = ClTensor_fromNative(tensorC)
     return tensor
 
+
 def cyPushClTensor(ClTensor tensor):
     pushClTensor(clGlobalState.state, globalState.L, tensor.native)
+
 
 cdef class ClTensor(object):
     cdef THClTensor *native
@@ -252,12 +260,14 @@ cdef class ClTensor(object):
         self.copy(floatTensor)
         return self
 
+
 cdef ClTensor_fromNative(THClTensor *tensorC, retain=True):
     cdef ClTensor tensor = ClTensor(_allocate=False )
     tensor.native = tensorC
     if retain:
         THClTensor_retain(clGlobalState.state, tensorC)
     return tensor
+
 
 def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
     cdef Storage._LongStorage size = floatTensor.size()
@@ -279,26 +289,34 @@ def FloatTensorToClTensor(PyTorch._FloatTensor floatTensor):
     else:
         return ClTensor()
 
+
 import floattensor_patch
 
+
 cdef PyTorch.GlobalState globalState = PyTorch.getGlobalState()
+
 
 cdef class ClGlobalState(object):
     cdef THClState *state
 
+
 cdef ClGlobalState clGlobalState
+
 
 def getDeviceCount():
     global clGlobalState
     return THClState_getNumDevices(clGlobalState.state)
 
+
 def setDevice(device):
     global clGlobalState
     THClState_setDevice(clGlobalState.state, device)
 
+
 def getDevice():
     global clGlobalState
     return THClState_getDevice(clGlobalState.state)
+
 
 def init():
     global clGlobalState
